@@ -13,7 +13,10 @@ var Ad = require('models/Ad');
 var Comment = require('models/Comment');
 var async = require('async');
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 213a51d7940b029c5be0c15d2f7626edd08af9c1
 //var routes = require('./routes/index');
 //var users = require('./routes/users');
 var CommentRouter = require('./routes/CommentRouter');
@@ -61,16 +64,25 @@ app.use('/comment', CommentRouter);
 //app.use('/users', users);
 
 // catch 404 and forward to error handler
+<<<<<<< HEAD
 // app.use(function(req, res, next) {
 //     var err = new Error('Not Found');
 //     err.status = 404;
 //     next(err);
 // });
+=======
+app.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+>>>>>>> 213a51d7940b029c5be0c15d2f7626edd08af9c1
 
 // error handlers
 
 // development error handler
 // will print stacktrace
+<<<<<<< HEAD
 // if (app.get('env') === 'development') {
 //     app.use(function(err, req, res, next) {
 //         res.status(err.status || 500);
@@ -90,6 +102,27 @@ app.use('/comment', CommentRouter);
 //         error: {}
 //     });
 // });
+=======
+if (app.get('env') === 'development') {
+    app.use(function(err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
+    });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
+});
+>>>>>>> 213a51d7940b029c5be0c15d2f7626edd08af9c1
 
 app.listen(config.get('port'), function() {
     console.log("Listen port: ", config.get('port'));
