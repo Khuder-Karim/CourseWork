@@ -14,15 +14,14 @@ function Comment() {
             type: String,
             require: true
         },
-        author: {
-            type: Schema.Types.ObjectId,
-            ref: 'User',
-            require: true
+        rating: {
+            type: Number,
+            min: 1,
+            max: 5
         },
-        ad: {
-            type: Schema.Types.ObjectId,
-            ref: 'Ad',
-            require: true
+        created: {
+            type: Date,
+            default: Date.now()
         }
     });
 }

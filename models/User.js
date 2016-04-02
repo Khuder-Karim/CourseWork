@@ -6,6 +6,7 @@ var mongoose = require('../libs/mongoose');
 var util = require('util');
 var passwordHash = require('password-hash');
 var async = require('async');
+var Ad = require('./Ad.js');
 var Schema = mongoose.Schema;
 
 function User() {
@@ -21,10 +22,6 @@ function User() {
             type: String,
             required: true
         },
-        comments: [{
-            type: Schema.Types.ObjectId,
-            ref: 'Comment'
-        }],
         created: {
             type: Date,
             default: Date.now()
@@ -93,22 +90,10 @@ function Seller() {
             unique: true,
             required: true
         },
-        firstName: {
-            type: String,
-            required: true
-        },
-        lastName: {
-            type: String,
-            required: true
-        },
         phoneNumber: {
             type: String,
             required: true
-        },
-        ads: [{
-            type: Schema.Types.ObjectId,
-            ref: 'Ad'
-        }]
+        }
     });
 
     this.statics.registration = function(username, password, firstName,
@@ -121,6 +106,11 @@ function Seller() {
             if(err) return callback(err);
             callback(null, seller);
         })
+    };
+
+    this.method.addAd = function(adObject) {
+        var ad = new Ad(adObject);
+
     }
 }
 util.inherits(Seller, Schema);
@@ -138,12 +128,12 @@ function AuthError(message) {
 
     this.message = message;
 }
-
 util.inherits(AuthError, Error);
 
 AuthError.prototype.name = "AuthError";
 
 exports.AuthError = AuthError;
+
 
 
 

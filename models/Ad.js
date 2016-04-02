@@ -10,12 +10,23 @@ function Ad() {
     Schema.apply(this, arguments);
 
     this.add({
-        header: {
+        name: {
             type: String,
             require: true
         },
-        body: {
+        description: {
             type: String
+        },
+        image: {
+            type: String
+        },
+        price: {
+            type: Number,
+            require: true
+        },
+        top: {
+            type: Boolean,
+            default: false
         },
         author: {
             type: Schema.Types.ObjectId,
@@ -25,11 +36,7 @@ function Ad() {
         comments: [{
             type: Schema.Types.ObjectId,
             ref: 'Comment'
-        }],
-        price: {
-            type: Number,
-            require: true
-        }
+        }]
     });
 }
 util.inherits(Ad, Schema);
