@@ -19,6 +19,10 @@ function Comment() {
             min: 1,
             max: 5
         },
+        author: {
+            type: Schema.Types.ObjectId,
+            ref: 'Seller'
+        },
         created: {
             type: Date,
             default: Date.now()

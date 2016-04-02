@@ -30,8 +30,7 @@ function Ad() {
         },
         author: {
             type: Schema.Types.ObjectId,
-            ref: 'User',
-            require: true
+            ref: 'User'
         },
         comments: [{
             type: Schema.Types.ObjectId,

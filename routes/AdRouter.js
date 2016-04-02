@@ -32,15 +32,26 @@ AdRouter.route('/')
 ;
 
 AdRouter.route('/:adId')
-    .all(function(req,res,next) {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        next();
-    })
+    //.all(function(req,res,next) {
+    //    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    //    next();
+    //})
     .get(function(req,res,next){
         res.end('Will send details of the dish: ' + req.params.adId +' to you!');
     })
     .delete(function(req, res, next){
-        res.end('Deleting dish: ' + req.params.adId);
+        Ad.findOne({_id: req.params.adId}, function(err, ad) {
+            if(err) return next(err);
+            if(ad) {
+                ad.remove(function(err) {
+                    if(err) next(err);
+                    res.writeHead(200, {
+                        'Content-Type': 'text/plain'
+                    });
+                    res.end('Delete the ad with id: ' + ad._id);
+                })
+            }
+        });
     })
 ;
 
