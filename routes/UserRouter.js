@@ -5,20 +5,20 @@ var express = require('express');
 var UserRouter = express.Router();
 var AlreadyError = require('../models/FactoryUser').AlreadyError;
 var Factory = require('../models/FactoryUser').Factory;
+var Buyer = require('../models/Buyer').Buyer;
 
+var factory = new Factory();
 
 UserRouter.route('/')
     .get(function(req, res, next) {
-        User.findOne({_id: '56fd8523a6eb286811ea7024'}, function(err, user) { // _id: req.session.user._id
-            if(err) throw err;
-            res.json(user);
+        factory.getUser({}, function(err, users) {
+            if(err) return next(err);
+            res.json(users);
         });
     })
     .post(function(req, res, next){
 
-        var factory = new Factory();
         factory.createUser(req.body, handler);
-
 
         function handler(err, user) {
             if(err) {
@@ -38,7 +38,7 @@ UserRouter.route('/')
             res.writeHead(200, {
                 'Content-Type': 'text/plain'
             });
-            res.end('Added the' + user.kind + ' with id: ' + id);
+            res.end('Added user with id: ' + id);
         }
     })
 ;

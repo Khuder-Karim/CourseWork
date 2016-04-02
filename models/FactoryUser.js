@@ -2,36 +2,47 @@
  * Created by Karim on 02.04.2016.
  */
 
-var User = require('./User').User;
-var Seller = require('./User').Seller;
+var Buyer = require('./Buyer').Buyer;
+var Seller = require('./Seller').Seller;
 var async = require('async');
 var util = require('util');
 
 function Factory() {
-    this.createUser = function(userObject, callback) {
+
+    this.getUser = function(param, callback) {
         async.waterfall([
             function(callback) {
-                User.findOne({username: userObject.username}, callback);
+                Buyer.find(param, callback);
             },
-            function(foundUser, callback) {
-                if(foundUser) {
-                    callback(new AlreadyError("User already in database"));
+            function(foundUsers, callback) {
+                if(foundUsers.length > 0) {
+                    callback(null, foundUsers);
                 } else {
-                    if(userObject.email) {
-                        Seller.create(userObject, function(err, seller) {
-                            if(err) throw err;
-                            callback(null, seller);
-                        });
-                    } else {
-                        User.create(userObject, function(err, user) {
-                            if(err) throw err;
-                            callback(null, user);
-                        });
-                    }
+                    Seller.find(param, callback);
                 }
             }
-        ], callback);
-    }
+        ], function(err, foundUsers) {
+            if(err) callback(err);
+            callback(null, foundUsers);
+        });
+    };
+
+    var _self = this;
+
+    this.createUser = function(userObject, callback) {
+        _self.getUser({username: userObject.username}, function(err, users) {
+            if(err) throw err;
+            if(users.length > 0) {
+                callback(new AlreadyError("User already in database"));
+            } else {
+                if(userObject.email) {
+                    Seller.create(userObject, callback);
+                } else {
+                    Buyer.create(userObject, callback);
+                }
+            }
+        });
+    };
 }
 
 function AlreadyError(message) {

@@ -7,11 +7,7 @@ var bodyParser = require('body-parser');
 var config = require('./config');
 var mongoose = require('./libs/mongoose');
 var session = require('express-session');
-var User = require('models/User').User;
-var Seller = require('models/User').Seller;
-var Ad = require('models/Ad');
-var Comment = require('models/Comment');
-var async = require('async');
+
 
 //var routes = require('./routes/index');
 //var users = require('./routes/users');
@@ -115,52 +111,4 @@ app.use(function(err, req, res, next) {
 
 app.listen(config.get('port'), function() {
     console.log("Listen port: ", config.get('port'));
-    //User.registration("samir", "sony", function(err, user) {
-    //    if(err) console.log(err);
-    //    console.log(user);
-    //});
-    //async.waterfall([
-    //    function(callback) {
-    //        User.findOne({username: "samir"}, callback);
-    //    },
-    //    function(user, callback) {
-    //        var ad = new Ad({header: "First ad", author: user._id, price: 500});
-    //        var comment = new Comment({text: "Very good", author: user._id, ad: ad._id});
-    //        comment.save(function(err, comment) {
-    //            if(err) {
-    //                callback(err);
-    //            }
-    //            else {
-    //                ad.comments.push(comment._id);
-    //                ad.save(function (err, ad) {
-    //                    if (err) {
-    //                        callback(err);
-    //                    }
-    //                    else {
-    //                        user.comments.push(comment._id);
-    //                        user.save(function (err, user) {
-    //                            if (err) callback(err);
-    //                            else callback(null, user);
-    //                        })
-    //                    }
-    //
-    //                });
-    //            }
-    //        });
-    //    }
-    //], function(err, user) {
-    //    if(err) console.log("Error");
-    //    console.log(user);
-    //});
-
-
-
-
-    //Seller.registration("karimggg", "sony", "Karim", "Khuder", "karim5@tasd.ru", "+2656546354", function(err, user) {
-    //    if(err) console.log(err);
-    //});
-    //Seller.authorize("karimggg", "sony", function(err, user) {
-    //    if(err) console.log(err);
-    //    console.log(user);
-    //});
 });
