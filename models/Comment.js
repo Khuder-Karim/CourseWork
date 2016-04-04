@@ -17,11 +17,13 @@ function Comment() {
         rating: {
             type: Number,
             min: 1,
-            max: 5
+            max: 5,
+            require: true
         },
         author: {
             type: Schema.Types.ObjectId,
-            ref: 'Seller'
+            ref: 'Buyer',
+            require: true
         },
         created: {
             type: Date,

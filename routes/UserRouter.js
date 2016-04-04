@@ -13,6 +13,7 @@ UserRouter.route('/')
     .get(function(req, res, next) {
         factory.getUser({}, function(err, users) {
             if(err) return next(err);
+
             res.json(users);
         });
     })

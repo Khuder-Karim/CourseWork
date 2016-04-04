@@ -4,17 +4,18 @@
 
 var express = require('express');
 var CommentRouter = express.Router();
+var Comment = require('../models/Comment');
+var Ad = require('../models/Ad');
 
 CommentRouter.route('/')
-    .all(function(req,res,next) {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        next();
-    })
     .get(function(req, res, next) {
-        res.end("get");
-    })
-    .post(function(req, res, next) {
-        res.end("post");
+        Comment.find({})
+            .populate({path: 'author', select: 'username'})
+            .exec(function(err, comments) {
+                if(err) return next(err);
+                res.json(comments);
+            })
+        ;
     })
 ;
 

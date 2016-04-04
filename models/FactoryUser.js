@@ -10,20 +10,24 @@ var util = require('util');
 function Factory() {
 
     this.getUser = function(param, callback) {
-        async.waterfall([
+        async.parallel([
             function(callback) {
                 Buyer.find(param, callback);
             },
-            function(foundUsers, callback) {
-                if(foundUsers.length > 0) {
-                    callback(null, foundUsers);
-                } else {
-                    Seller.find(param, callback);
-                }
+            function(callback) {
+                Seller.find(param, callback);
             }
-        ], function(err, foundUsers) {
+        ], function(err, users) {
             if(err) callback(err);
-            callback(null, foundUsers);
+            var res = [];
+            users[0].forEach(function(item) {
+                res.push(item);
+            });
+            users[1].forEach(function(item) {
+                res.push(item);
+            });
+
+            callback(null, res);
         });
     };
 
