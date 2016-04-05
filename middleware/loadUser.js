@@ -13,8 +13,8 @@ module.exports = function(req, res, next) {
     (new FactoryUser).getUser({_id: req.session.user}, function(err, user) {
         if(err)
             return next(err);
-        if(user) {
-            req.user = res.locals.user = user;
+        if(user.length > 0) {
+            req.user = res.locals.user = user[0];
             req.user.authorize();
         }
         next();

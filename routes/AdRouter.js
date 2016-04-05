@@ -6,7 +6,6 @@ var express = require('express');
 var AdRouter = express.Router();
 var Ad = require('../models/Ad');
 var async = require('async');
-var Comment = require('../models/Comment');
 var Buyer = require('../models/Buyer').Buyer;
 
 AdRouter.route('/')
@@ -32,21 +31,10 @@ AdRouter.route('/')
 
 AdRouter.route('/:adId')
     .get(function(req,res,next){
-        Ad.findById(req.params.adId)
-            .populate('author')
-            .populate('comments')
-            .exec(function(err, ad) {
-                async.each(ad.comments, function(com, callback) {
-                    Buyer.findById(com.author, function(err, buyer) {
-                        if(err) callback(err);
-                        com.author = buyer;
-                        callback();
-                    });
-                }, function(err) {
-                    res.json(ad);
-                });
-            })
-        ;
+        Ad.getAdDetails(req.params.adId, function(err, ad) {
+            if(err) return next(err);
+            res.json(ad);
+        });
     })
     .delete(function(req, res, next){
         Ad.findById(req.params.adId, function(err, ad) {
@@ -60,7 +48,7 @@ AdRouter.route('/:adId')
                     res.end('Delete the ad with id: ' + ad._id);
                 })
             } else {
-                res.end(404);
+                res.status(404).json({error: "Not found Ad"});
             }
         });
     })
@@ -73,9 +61,11 @@ AdRouter.route('/:adId/comment')
                 Ad.findById(req.params.adId, callback);
             },
             function(ad, callback) {
-                if(ad) {
+                if(ad)
                     ad.addComment(req.body, callback);
-                }
+                else
+                    res.status(404).json({error: "Not found Ad"});
+
             }
         ], function(err, comment) {
             if(err) return next(err);
@@ -84,7 +74,7 @@ AdRouter.route('/:adId/comment')
             });
             res.end('Comment is added. It is ' + comment.text);
         });
-    });
+    })
 ;
 
 module.exports = AdRouter;

@@ -10,7 +10,7 @@ var Ad = require('../models/Ad');
 CommentRouter.route('/')
     .get(function(req, res, next) {
         Comment.find({})
-            .populate({path: 'author', select: 'username'})
+            .populate('author')
             .exec(function(err, comments) {
                 if(err) return next(err);
                 res.json(comments);
