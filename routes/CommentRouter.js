@@ -5,7 +5,6 @@
 var express = require('express');
 var CommentRouter = express.Router();
 var Comment = require('../models/Comment');
-var Ad = require('../models/Ad');
 
 CommentRouter.route('/')
     .get(function(req, res, next) {

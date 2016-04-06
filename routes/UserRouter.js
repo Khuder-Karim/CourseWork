@@ -4,16 +4,14 @@
 var express = require('express');
 var UserRouter = express.Router();
 var AlreadyError = require('../models/FactoryUser').AlreadyError;
-var Factory = require('../models/FactoryUser').Factory;
-var Buyer = require('../models/Buyer').Buyer;
-
+var Factory = require('../models/FactoryUser');
+var User = require('../models/User');
 var factory = new Factory();
 
 UserRouter.route('/')
     .get(function(req, res, next) {
-        factory.getUser({}, function(err, users) {
+        User.getUser({}, function(err, users) {
             if(err) return next(err);
-
             res.json(users);
         });
     })
@@ -27,19 +25,13 @@ UserRouter.route('/')
                     res.writeHead(302, {
                         'Content-Type': 'text/plain'
                     });
-                    res.end(err.message);
+                    res.json({error: err.message});
                     return;
                 } else {
                     return next(err);
                 }
             }
-
-            var id = user._id;
-
-            res.writeHead(200, {
-                'Content-Type': 'text/plain'
-            });
-            res.end('Added user with id: ' + id);
+            res.json({message: 'Added user with id: ' + user._id});
         }
     })
 ;

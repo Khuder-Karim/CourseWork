@@ -8,18 +8,11 @@ var config = require('./config');
 var mongoose = require('./libs/mongoose');
 var session = require('express-session');
 
-
-//var routes = require('./routes/index');
-//var users = require('./routes/users');
-var CommentRouter = require('./routes/CommentRouter');
-var AdRouter = require('./routes/AdRouter');
-var UserRouter = require('./routes/UserRouter');
-
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -48,12 +41,7 @@ app.use(require('node-sass-middleware')({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/user', UserRouter);
-app.use('/ad', AdRouter);
-app.use('/comment', CommentRouter);
-
-//app.use('/', routes);
-//app.use('/users', users);
+require('./routes')(app);
 
 // catch 404 and forward to error handler
 
@@ -63,51 +51,13 @@ app.use(function(req, res, next) {
     next(err);
 });
 
-// error handlers
-
-// development error handler
-// will print stacktrace
-
-// if (app.get('env') === 'development') {
-//     app.use(function(err, req, res, next) {
-//         res.status(err.status || 500);
-//         res.render('error', {
-//             message: err.message,
-//             error: err
-//         });
-//     });
-// }
-//
-// // production error handler
-// // no stacktraces leaked to user
-// app.use(function(err, req, res, next) {
-//     res.status(err.status || 500);
-//     res.render('error', {
-//         message: err.message,
-//         error: {}
-//     });
-// });
-
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
-}
-
-// production error handler
-// no stacktraces leaked to user
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
+    res.json('error', {
         message: err.message,
         error: {}
     });
 });
-
 
 app.listen(config.get('port'), function() {
     console.log("Listen port: ", config.get('port'));

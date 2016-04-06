@@ -6,25 +6,18 @@ var express = require('express');
 var AdRouter = express.Router();
 var Ad = require('../models/Ad');
 var async = require('async');
-var Buyer = require('../models/Buyer').Buyer;
 
 AdRouter.route('/')
     .get(function(req, res, next) {
         Ad.find({}, function(err, ads) {
             if(err) return next(err);
-
             res.json(ads);
         })
     })
     .post(function(req, res, next) {
         Ad.create(req.body, function (err, ad) {
             if (err) return next(err);
-            var id = ad._id;
-
-            res.writeHead(200, {
-                'Content-Type': 'text/plain'
-            });
-            res.end('Added the ad with id: ' + id);
+            res.json({message: 'Added ad with id: ' + ad._id});
         });
     })
 ;
@@ -42,10 +35,7 @@ AdRouter.route('/:adId')
             if(ad) {
                 ad.remove(function(err) {
                     if(err) next(err);
-                    res.writeHead(200, {
-                        'Content-Type': 'text/plain'
-                    });
-                    res.end('Delete the ad with id: ' + ad._id);
+                    res.json({message: 'Delete the ad with id: ' + ad._id});
                 })
             } else {
                 res.status(404).json({error: "Not found Ad"});
@@ -65,14 +55,10 @@ AdRouter.route('/:adId/comment')
                     ad.addComment(req.body, callback);
                 else
                     res.status(404).json({error: "Not found Ad"});
-
             }
         ], function(err, comment) {
             if(err) return next(err);
-            res.writeHead(200, {
-                'Content-Type': 'text/plain'
-            });
-            res.end('Comment is added. It is ' + comment.text);
+            res.json({message: 'Comment is added. It is ' + comment.text});
         });
     })
 ;

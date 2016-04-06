@@ -24,5 +24,4 @@ function DecoratorBuyer() {
 }
 util.inherits(DecoratorBuyer, mongoose.Schema);
 
-
 exports.Seller = mongoose.model('Seller', new DecoratorBuyer());

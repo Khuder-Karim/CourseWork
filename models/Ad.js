@@ -6,10 +6,10 @@ var mongoose = require('../libs/mongoose');
 var Schema = mongoose.Schema;
 var util = require('util');
 var Comment = require('./Comment');
-var factoryUser = require('./FactoryUser').Factory;
+var User = require('./User');
 var async = require('async');
 
-var factory = new factoryUser();
+
 
 function Ad() {
     Schema.apply(this, arguments);
@@ -67,7 +67,7 @@ function Ad() {
                     return;
                 }
                 async.each(ad.comments, function(com, callback) {
-                    factory.getUser({_id: com.author}, function(err, user) {
+                    User.getUser({_id: com.author}, function(err, user) {
                         if(err) callback(err);
                         com.author = user[0];
 
