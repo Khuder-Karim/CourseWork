@@ -7,5 +7,9 @@ module.exports = function(app) {
     app.use('/login', require('./login'));
     app.use('/logout', require('./logout'));
     app.use('/session', require('./session'));
+
+    app.use('/', function(req, res, next) {
+        res.render('index');
+    });
 };
 
