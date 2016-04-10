@@ -7,6 +7,8 @@ var AdRouter = express.Router();
 var Ad = require('../models/Ad');
 var async = require('async');
 
+var User = require('../models/User');
+
 AdRouter.route('/')
     .get(function(req, res, next) {
         Ad.find({}, function(err, ads) {
@@ -15,7 +17,9 @@ AdRouter.route('/')
         })
     })
     .post(function(req, res, next) {
-        Ad.create(req.body, function (err, ad) {
+        var obj = req.body;
+        obj.author = req.user._id;
+        Ad.create(obj, function (err, ad) {
             if (err) return next(err);
             res.json({message: 'Added ad with id: ' + ad._id});
         });
@@ -46,19 +50,29 @@ AdRouter.route('/:adId')
 
 AdRouter.route('/:adId/comment')
     .post(function(req, res, next) {
-        async.waterfall([
-            function(callback) {
-                Ad.findById(req.params.adId, callback);
-            },
-            function(ad, callback) {
-                if(ad)
-                    ad.addComment(req.body, callback);
-                else
-                    res.status(404).json({error: "Not found Ad"});
-            }
-        ], function(err, comment) {
+        var obj = req.body;
+        obj.author = req.user._id;
+        User.setComment(req.params.adId, obj, function(err, comment) {
             if(err) return next(err);
-            res.json({message: 'Comment is added. It is ' + comment.text});
+            res.end("Ok");
+        })
+    })
+;
+
+AdRouter.route('/:adId/subscribe')
+    .post(function(req, res, next) {
+        User.subscribe(req, function(err, ad) {
+            if(err) return next(err);
+            res.end();
+        })
+    })
+;
+
+AdRouter.route('/:adId/unsubscribe')
+    .post(function(req, res, next) {
+        User.unsubscribe(req, function(err) {
+            if(err) return next(err);
+            res.end("Ok");
         });
     })
 ;

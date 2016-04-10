@@ -10,7 +10,7 @@ SessionRouter.route('/')
         var session = {
             username: req.user.username,
             email: req.user.email,
-            numberPhone: req.user.numberPhone
+            phoneNumber: req.user.phoneNumber
         };
         res.json(session);
     })

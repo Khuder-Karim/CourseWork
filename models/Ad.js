@@ -6,10 +6,7 @@ var mongoose = require('../libs/mongoose');
 var Schema = mongoose.Schema;
 var util = require('util');
 var Comment = require('./Comment');
-var User = require('./User');
 var async = require('async');
-
-
 
 function Ad() {
     Schema.apply(this, arguments);
@@ -35,25 +32,14 @@ function Ad() {
         },
         author: {
             type: Schema.Types.ObjectId,
-            ref: 'Seller'
+            ref: 'Seller',
+            require: true
         },
         comments: [{
             type: Schema.Types.ObjectId,
             ref: 'Comment'
         }]
     });
-
-    this.methods.addComment = function(objectComment, callback) {
-        var ad = this;
-        Comment.create(objectComment, function(err, comment) {
-            if(err) callback(err);
-            ad.comments.push(comment._id);
-            ad.save(function(err) {
-                if(err) callback(err);
-                callback(null, comment);
-            });
-        })
-    };
 
     this.statics.getAdDetails = function(idAd, callback) {
         var Ad = this;
@@ -67,7 +53,7 @@ function Ad() {
                     return;
                 }
                 async.each(ad.comments, function(com, callback) {
-                    User.getUser({_id: com.author}, function(err, user) {
+                    require('./User').getUser({_id: com.author}, function(err, user) {
                         if(err) callback(err);
                         com.author = user[0];
 

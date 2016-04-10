@@ -24,7 +24,11 @@ function Buyer() {
         created: {
             type: Date,
             default: Date.now()
-        }
+        },
+        liked: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Ad'
+        }]
     });
 
     this.virtual('password')
