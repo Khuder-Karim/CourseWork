@@ -7,12 +7,10 @@ var SessionRouter = express.Router();
 
 SessionRouter.route('/')
     .get(function(req, res, next) {
-        var session = {
-            username: req.user.username,
-            email: req.user.email,
-            phoneNumber: req.user.phoneNumber
-        };
-        res.json(session);
+        if(req.user)
+            res.json(req.user);
+        else
+            res.json({});
     })
 ;
 

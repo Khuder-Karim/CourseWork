@@ -1,0 +1,23 @@
+<div class="col-xs-12 col-sm-9" ng-controller="UserController">
+    <form class="form-horizontal" role="form" name="LoginForm" ng-submit="login()" novalidate>
+        <div class="form-group" ng-class="{ 'has-error' : LoginForm.username.$error.required && !LoginForm.username.$pristine }">
+            <label for="username" class="col-sm-2 control-label">First Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" ng-model="userObject.username" required>
+                <span ng-show="LoginForm.username.$error.required && !LoginForm.username.$pristine" class="help-block">Username обьязательный</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error' : LoginForm.password.$error.required && LoginForm.password.$dirty}">
+            <label for="password" class="col-sm-2 control-label">Last Name</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" ng-model="userObject.password" required>
+                <span ng-show="LoginForm.password.$error.required && LoginForm.password.$dirty" class="help-block">Пароль обьязательный</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary" ng-disabled="LoginForm.$invalid"d>Войти</button>
+            </div>
+        </div>
+    </form>
+</div>

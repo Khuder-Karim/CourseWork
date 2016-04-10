@@ -13,7 +13,7 @@ LoginRouter.route('/')
         User.authorize(req.body.username, req.body.password, function(err, user) {
             if(err) {
                 if(err instanceof AuthError)
-                    res.status(404).json({error: err.message});
+                    res.status(401).json({error: err.message});
                 else if(err instanceof UserNotFoundError)
                     res.status(404).json({error: err.message});
                 else

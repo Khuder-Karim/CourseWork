@@ -36,8 +36,10 @@ app.use(require('middleware/loadUser'));
 app.use(require('node-sass-middleware')({
     src: path.join(__dirname, 'public/css/sass'),
     dest: path.join(__dirname, 'public/css'),
+    debug: true,
     indentedSyntax: true,
-    sourceMap: true
+    outputStyle: 'compressed',
+    prefix: '/css'
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 

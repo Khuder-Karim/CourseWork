@@ -1,0 +1,19 @@
+<nav class="navbar navbar-default" ng-controller="UserController">
+    <div class="container">
+        <ul class="nav navbar-nav navbar-left">
+            <a ui-sref="app"><img src="../images/icon.png" alt="icon" id="icon"></a>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a ui-sref="app.login" ng-if="user==null">Войти</a></li>
+            <li><a ui-sref="app.register" ng-if="user==null">Регистрация</a></li>
+            <li><a ui-sref="app.register" class="btn btn-warning">Дать Обьявление</a></li>
+            <li class="dropdown" ng-if="user!=null">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user.username}} <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a ui-sref="app.profile">Профиль</a></li>
+                    <li><a href="#" ng-click="logout()">Выйти</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div><!-- /.container-fluid -->
+</nav>
