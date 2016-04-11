@@ -31,6 +31,15 @@ angular.module('courseApp', ['ui.router', 'ngResource'])
                 }
             })
 
+            .state('app.register', {
+                url: 'register',
+                views: {
+                    'content@': {
+                        templateUrl: 'views/register.html'
+                    }
+                }
+            })
+
         ;
 
         $urlRouterProvider.otherwise('/');

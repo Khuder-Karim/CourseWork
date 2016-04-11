@@ -1,0 +1,51 @@
+<div class="col-xs-12 col-sm-9" ng-controller="UserController">
+    <form class="form-horizontal" role="form" name="RigisterForm" ng-submit="register()" novalidate>
+        <div class="form-group" ng-class="{ 'has-error' : RigisterForm.username.$error.required && !RigisterForm.username.$pristine }">
+            <label for="username" class="col-sm-2 control-label">First Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="username" name="username" placeholder="Enter First Name" ng-model="registerData.username" required>
+                <span ng-show="RigisterForm.username.$error.required && !RigisterForm.username.$pristine" class="help-block">Username is required</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error' : RigisterForm.password.$error.required && RigisterForm.password.$dirty}">
+            <label for="password" class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="password" name="password" placeholder="Enter password" ng-model="registerData.password" required>
+                <span ng-show="RigisterForm.password.$error.required && RigisterForm.password.$dirty" class="help-block">Password is required.</span>
+            </div>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error' : invalidChannelSelection }">
+            <div class="checkbox col-sm-5 col-sm-offset-2">
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="approve" value="" ng-model="SellerCheckBox">
+                    <strong>Are you Seller?</strong>
+                </label>
+            </div>
+        </div>
+        <div ng-if="SellerCheckBox">
+            <div class="form-group" ng-class="{ 'has-error has-feedback' : RigisterForm.email.$invalid && RigisterForm.email.$dirty }">
+                <label for="email" class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" ng-model="registerData.email" required>
+                    <span ng-show="RigisterForm.email.$invalid && RigisterForm.email.$dirty" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                    <span ng-show="(RigisterForm.email.$invalid || RigisterForm.email.$error.required) && RigisterForm.email.$dirty" class="help-block">Enter a valid email adress</span>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error has-feedback' : RigisterForm.phoneNumber.$invalid && RigisterForm.phoneNumber.$dirty }">
+                <label for="phoneNumber" class="col-sm-2 control-label">Telefone</label>
+                <div class="col-sm-10">
+                    <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Phone" ng-model="registerData.phoneNumber" required>
+                    <span ng-show="RigisterForm.phoneNumber.$invalid && RigisterForm.phoneNumber.$dirty" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                    <span ng-show="(RigisterForm.phoneNumber.$invalid || RigisterForm.phoneNumber.$error.required) && RigisterForm.phoneNumber.$dirty" class="help-block">Enter a valid tel</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary" ng-disabled="RigisterForm.$invalid">Registration</button>
+            </div>
+        </div>
+    </form>
+</div>

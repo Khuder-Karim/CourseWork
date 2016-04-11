@@ -12,15 +12,28 @@ angular.module('courseApp')
             password: ''
         };
 
+        $scope.registerData = {
+            username: '',
+            password: '',
+            email: '',
+            phoneNumber: ''
+        };
+        $scope.SellerCheckBox = false;
+
+        $scope.errorMessage = '';
+
+        $scope.register = function() {
+
+        };
+
         $scope.logout = function() {
             UserFactory.logout().save(
                 function() {
-                    console.log("Good");
                     SessionFactory.getSession();
                     $state.go('app');
                 },
-                function() {
-                    console.log("Bad");
+                function(err) {
+                    $scope.errorMessage = err.message;
                 }
             );
         };
@@ -32,11 +45,25 @@ angular.module('courseApp')
                     SessionFactory.getSession();
                     $state.go('app');
                 },
-                function(response) {
-                    console.log(response.message);
+                function(err) {
+                    console.log(err.data);
+                    $scope.errorMessage = err.data.message;
                 }
             );
         };
+
+        $scope.register = function() {
+            UserFactory.register().save($scope.registerData,
+                function() {
+                    console.log("Hello " + $scope.userObject.username);
+                    SessionFactory.getSession();
+                    $state.go('app');
+                },
+                function(err) {
+                    console.log(err.statusText);
+                }
+            );
+        }
 
     }])
 ;

@@ -4,26 +4,29 @@
 
 var util = require('util');
 
-function AuthError(message) {
+function AuthError(status, message) {
     Error.apply(this, arguments);
     Error.captureStackTrace(this, AuthError);
 
+    this.status = status;
     this.message = message || 'Error';
 }
 util.inherits(AuthError, Error);
 
-function UserNotFountError(message) {
+function UserNotFountError(status, message) {
     Error.apply(this, arguments);
     Error.captureStackTrace(this, UserNotFountError);
 
+    this.status = status;
     this.message = message || 'Error';
 }
 util.inherits(UserNotFountError, Error);
 
-function AlreadyError(message) {
+function AlreadyError(status, message) {
     Error.apply(this, arguments);
     Error.captureStackTrace(this, AlreadyError);
 
+    this.status = status;
     this.message = message || 'Error';
 }
 util.inherits(AlreadyError, Error);

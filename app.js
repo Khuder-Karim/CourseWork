@@ -54,7 +54,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(err, req, res, next) {
-    res.status(err.status || 500).end(err.message);
+    res.status(err.status || 500).send(err);
 });
 
 app.listen(config.get('port'), function() {

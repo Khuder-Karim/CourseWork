@@ -47,10 +47,10 @@ function User() {
                 if(user[0].checkPassword(password)) {
                     callback(null, user[0]);
                 } else {
-                    callback(new AuthError("Password is not correct"));
+                    callback(new AuthError(401, "Password is not correct"));
                 }
             } else {
-                callback(new UserNotFoundError("User not found"));
+                callback(new UserNotFoundError(404, "User not found"));
             }
         });
     };

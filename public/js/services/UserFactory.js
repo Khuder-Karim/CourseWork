@@ -15,5 +15,8 @@ angular.module('courseApp')
             return $resource(baseURL+'login');
         };
 
+        this.register = function() {
+            return $resource(baseURL+'user');
+        };
     }])
 ;
