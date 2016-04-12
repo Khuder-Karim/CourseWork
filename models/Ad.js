@@ -19,16 +19,12 @@ function Ad() {
         description: {
             type: String
         },
-        image: {
-            type: String
+        img: {
+            type: Buffer
         },
         price: {
             type: Number,
             require: true
-        },
-        top: {
-            type: Boolean,
-            default: false
         },
         author: {
             type: Schema.Types.ObjectId,

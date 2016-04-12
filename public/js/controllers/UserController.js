@@ -4,7 +4,7 @@
 
 angular.module('courseApp')
 
-    .controller('UserController', ['$scope', '$state', 'UserFactory', 'SessionFactory', function($scope, $state,
+    .controller('UserController', ['$scope', '$rootScope', '$state', 'UserFactory', 'SessionFactory', function($scope, $rootScope, $state,
                                                                                                  UserFactory, SessionFactory) {
 
         $scope.userObject = {
@@ -33,7 +33,7 @@ angular.module('courseApp')
                     $state.go('app');
                 },
                 function(err) {
-                    $scope.errorMessage = err.message;
+                    console.log(err);
                 }
             );
         };
@@ -41,12 +41,10 @@ angular.module('courseApp')
         $scope.login = function() {
             UserFactory.login().save($scope.userObject,
                 function() {
-                    console.log("Hello " + $scope.userObject.username);
                     SessionFactory.getSession();
                     $state.go('app');
                 },
                 function(err) {
-                    console.log(err.data);
                     $scope.errorMessage = err.data.message;
                 }
             );
@@ -55,15 +53,21 @@ angular.module('courseApp')
         $scope.register = function() {
             UserFactory.register().save($scope.registerData,
                 function() {
-                    console.log("Hello " + $scope.userObject.username);
-                    SessionFactory.getSession();
                     $state.go('app');
                 },
                 function(err) {
-                    console.log(err.statusText);
+                    $scope.errorMessage = err.data.message;
                 }
             );
-        }
+        };
+
+        $scope.AdButton = function() {
+            console.log($rootScope.user);
+            if($rootScope.user != null)
+                $state.go('app.adEdit');
+            else
+                $state.go('app.login');
+        };
 
     }])
 ;

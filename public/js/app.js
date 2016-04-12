@@ -40,6 +40,15 @@ angular.module('courseApp', ['ui.router', 'ngResource'])
                 }
             })
 
+            .state('app.adEdit', {
+                url: 'adEdit',
+                views: {
+                    'content@': {
+                        templateUrl: 'views/adEdit.html'
+                    }
+                }
+            })
+
         ;
 
         $urlRouterProvider.otherwise('/');

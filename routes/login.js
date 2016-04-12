@@ -12,6 +12,11 @@ LoginRouter.route('/')
     .post(function(req, res, next) {
         User.authorize(req.body.username, req.body.password, function(err, user) {
             if(err) {
+                if(err instanceof AuthError)
+                    err.status = 401;
+                else if(err instanceof UserNotFoundError)
+                    err.status = 404;
+
                 return next(err);
             } else {
                 req.session.user = user._id;

@@ -21,14 +21,12 @@ UserRouter.route('/')
 
         function handler(err, user) {
             if(err) {
-                if(err instanceof AlreadyError) {
+                if(err instanceof AlreadyError)
                     err.status = 302;
-                    return next(err);
-                } else {
-                    return next(err);
-                }
+
+                return next(err);
             }
-            res.json({message: 'Added user with id: ' + user._id});
+            res.end();
         }
     })
 ;

@@ -4,11 +4,10 @@
 
 var util = require('util');
 
-function AuthError(status, message) {
+function AuthError(message) {
     Error.apply(this, arguments);
     Error.captureStackTrace(this, AuthError);
 
-    this.status = status;
     this.message = message || 'Error';
 }
 util.inherits(AuthError, Error);
@@ -17,16 +16,14 @@ function UserNotFountError(status, message) {
     Error.apply(this, arguments);
     Error.captureStackTrace(this, UserNotFountError);
 
-    this.status = status;
     this.message = message || 'Error';
 }
 util.inherits(UserNotFountError, Error);
 
-function AlreadyError(status, message) {
+function AlreadyError(message) {
     Error.apply(this, arguments);
     Error.captureStackTrace(this, AlreadyError);
 
-    this.status = status;
     this.message = message || 'Error';
 }
 util.inherits(AlreadyError, Error);

@@ -21,7 +21,8 @@ AdRouter.route('/')
         obj.author = req.user._id;
         Ad.create(obj, function (err, ad) {
             if (err) return next(err);
-            res.json({message: 'Added ad with id: ' + ad._id});
+            //res.json({message: 'Added ad with id: ' + ad._id});
+            res.end();
         });
     })
 ;
