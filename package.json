@@ -20,5 +20,8 @@
     "node-sass-middleware": "0.8.0",
     "password-hash": "^1.2.2",
     "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "multer": "^0.1.8"
   }
 }

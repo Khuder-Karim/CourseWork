@@ -4,7 +4,7 @@
 
 angular.module('courseApp')
 
-    .controller('UserController', ['$scope', '$rootScope', '$state', 'UserFactory', 'SessionFactory', function($scope, $rootScope, $state,
+    .controller('UserController', ['$stateParams', '$scope', '$rootScope', '$state', 'UserFactory', 'SessionFactory', function($stateParams, $scope, $rootScope, $state,
                                                                                                  UserFactory, SessionFactory) {
 
         $scope.userObject = {
@@ -21,10 +21,6 @@ angular.module('courseApp')
         $scope.SellerCheckBox = false;
 
         $scope.errorMessage = '';
-
-        $scope.register = function() {
-
-        };
 
         $scope.logout = function() {
             UserFactory.logout().save(
@@ -61,12 +57,16 @@ angular.module('courseApp')
             );
         };
 
-        $scope.AdButton = function() {
-            console.log($rootScope.user);
-            if($rootScope.user != null)
-                $state.go('app.adEdit');
-            else
+
+        $scope.ProxyAdButton = function() {
+            if($rootScope.user != null) {
+                if(!$rootScope.user.email)
+                    console.log("Вы авторизированы как покупатель");
+                else
+                    $state.go('app.adEdit');
+            } else {
                 $state.go('app.login');
+            }
         };
 
     }])

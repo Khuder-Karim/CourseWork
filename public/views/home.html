@@ -1,3 +1,8 @@
-<div class="container" ng-controller="UserController">
-    <p>{{user.username}}</p>
+<div class="container" ng-controller="AdController">
+    <blockquote ng-repeat="ad in ads">
+        <h2>{{ad.name}} Stars</h2>
+        <p>{{ad.description}}</p>
+        <img src="{{ad.img}}" alt="image" width="400px">
+        <footer>{{ad.price}}, {{comment.date | date: 'longDate'}}</footer>
+    </blockquote>
 </div>

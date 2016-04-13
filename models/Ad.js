@@ -20,7 +20,7 @@ function Ad() {
             type: String
         },
         img: {
-            type: Buffer
+            type: String
         },
         price: {
             type: Number,

@@ -9,6 +9,7 @@ angular.module('courseApp', ['ui.router', 'ngResource'])
 
             .state('app', {
                 url: '/',
+                cache: false,
                 views: {
                     'header': {
                         templateUrl: 'views/header.html'

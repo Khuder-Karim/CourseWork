@@ -19,9 +19,9 @@ AdRouter.route('/')
     .post(function(req, res, next) {
         var obj = req.body;
         obj.author = req.user._id;
-        Ad.create(obj, function (err, ad) {
-            if (err) return next(err);
-            //res.json({message: 'Added ad with id: ' + ad._id});
+        obj.img = 'images/ad/' + req.files.file.name;
+        Ad.create(obj, function(err, ad) {
+            if(err) return next(err);
             res.end();
         });
     })
@@ -77,5 +77,4 @@ AdRouter.route('/:adId/unsubscribe')
         });
     })
 ;
-
 module.exports = AdRouter;
