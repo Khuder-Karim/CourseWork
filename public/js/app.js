@@ -50,6 +50,15 @@ angular.module('courseApp', ['ui.router', 'ngResource'])
                 }
             })
 
+            .state('app.adDetails', {
+                url: 'ad/:id',
+                views: {
+                    'content@': {
+                        templateUrl: 'views/adDetail.html'
+                    }
+                }
+            })
+
         ;
 
         $urlRouterProvider.otherwise('/');

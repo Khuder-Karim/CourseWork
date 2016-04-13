@@ -34,7 +34,11 @@ function Ad() {
         comments: [{
             type: Schema.Types.ObjectId,
             ref: 'Comment'
-        }]
+        }],
+        created: {
+            type: Date,
+            default: Date.now()
+        }
     });
 
     this.statics.getAdDetails = function(idAd, callback) {

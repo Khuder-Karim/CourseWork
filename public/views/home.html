@@ -1,8 +1,22 @@
 <div class="container" ng-controller="AdController">
-    <blockquote ng-repeat="ad in ads">
-        <h2>{{ad.name}} Stars</h2>
-        <p>{{ad.description}}</p>
-        <img src="{{ad.img}}" alt="image" width="400px">
-        <footer>{{ad.price}}, {{comment.date | date: 'longDate'}}</footer>
-    </blockquote>
+    <div class="row adWrapper" ng-repeat="ad in ads">
+        <div class="col-xs-12 col-md-3 adImageBlock">
+            <a ui-sref="app.adDetails({id:ad._id})">
+                <img ng-src="{{ad.img}}" alt="{{ad.name}} Image" class="adImage">
+            </a>
+        </div>
+        <div class="col-xs-12 col-md-9 adInfoBlock">
+            <div class="row">
+                <div class="col-xs-12 col-sm-10">
+                    <a ui-sref="app.adDetails({id:ad._id})">
+                        <h4 class="AdHeader">{{ad.name}}</h4>
+                    </a>
+                    {{ad.created | date: 'longDate'}}
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <strong class="adPrice">{{ad.price}} Грн.</strong>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

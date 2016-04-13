@@ -22,9 +22,16 @@ angular.module('courseApp')
             }).then(
                 function() {
                     $state.go('app');
+                },
+                function(err) {
+                    console.log(err.status + ' ' + err.statusText);
                 }
             );
-        }
+        };
+
+        this.postComment = function() {
+            return $resource(baseURL+'ad/:id/comment');
+        };
 
     }])
 ;
