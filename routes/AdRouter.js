@@ -73,7 +73,7 @@ AdRouter.route('/:adId/unsubscribe')
     .post(function(req, res, next) {
         User.unsubscribe(req, function(err) {
             if(err) return next(err);
-            res.end("Ok");
+            res.end();
         });
     })
 ;

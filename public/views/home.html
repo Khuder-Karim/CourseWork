@@ -15,6 +15,8 @@
                 </div>
                 <div class="col-xs-12 col-sm-2">
                     <strong class="adPrice">{{ad.price}} Грн.</strong>
+                    <button class="btn-info" ng-if="isSubscription(ad._id)" ng-click="unsubscribe(ad._id)">Отписатся</button>
+                    <button class="btn-info" ng-if="!isSubscription(ad._id)" ng-click="subscribe(ad._id)">Подписатся</button>
                 </div>
             </div>
         </div>
