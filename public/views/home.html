@@ -17,6 +17,7 @@
                     <strong class="adPrice">{{ad.price}} Грн.</strong>
                     <button class="btn-info" ng-if="user!=null && isSubscription(ad._id) && user._id != ad.author " ng-click="unsubscribe(ad._id)">Отписатся</button>
                     <button class="btn-info" ng-if="user!=null && !isSubscription(ad._id) && user._id != ad.author" ng-click="subscribe(ad._id)">Подписатся</button>
+                    <button class="btn-warning" ng-if="user!=null && user._id == ad.author" ng-click="deleteAd(ad._id)">Удалить</button>
                 </div>
             </div>
         </div>

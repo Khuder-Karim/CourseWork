@@ -7,7 +7,8 @@ angular.module('courseApp')
     .service('AdFactory', ['$http', '$state', '$resource', 'baseURL', function($http, $state, $resource, baseURL) {
 
         this.getAds = function() {
-            return $resource(baseURL+'ad/:id');
+            return $resource(baseURL+'ad/:id', null,
+                {'remove': {method: 'DELETE'}});
         };
 
         this.post = function(uploadUrl, data) {

@@ -12,7 +12,7 @@ function AuthError(message) {
 }
 util.inherits(AuthError, Error);
 
-function UserNotFountError(status, message) {
+function UserNotFountError(message) {
     Error.apply(this, arguments);
     Error.captureStackTrace(this, UserNotFountError);
 

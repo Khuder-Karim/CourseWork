@@ -6,6 +6,9 @@ var express = require('express');
 var AdRouter = express.Router();
 var Ad = require('../models/Ad');
 var async = require('async');
+var fs = require('fs');
+var path = require('path');
+var Comment = require('../models/Comment');
 
 var User = require('../models/User');
 
@@ -38,12 +41,39 @@ AdRouter.route('/:adId')
         Ad.findById(req.params.adId, function(err, ad) {
             if(err) return next(err);
             if(ad) {
-                ad.remove(function(err) {
-                    if(err) next(err);
-                    res.json({message: 'Delete the ad with id: ' + ad._id});
-                })
+                async.parallel([
+                    function(callback) {
+                        Comment.find({
+                            '_id': {$in: ad.comments}
+                        }, function(err, comments) {
+                            if(err) callback(err);
+                            async.each(comments, function(com, callback) {
+                                com.remove(callback);
+                            }, callback);
+                        });
+                    },
+                    function(callback) {
+                        fs.unlink(path.join("public", ad.img), callback);
+                    },
+                    function(callback) {
+                        User.getUser({liked: ad._id}, function(err, user) {
+                            if(err) callback(err);
+                            async.each(user, function(us, callback) {
+                                var index = us.liked.indexOf(ad._id);
+                                us.liked.splice(index, 1);
+                                us.save(callback);
+                            }, callback);
+                        });
+                    }
+                ], function(err) {
+                    if(err) return next(err);
+                    ad.remove(function(err) {
+                        if(err) return next(err);
+                        res.end();
+                    });
+                });
             } else {
-                res.status(404).json({error: "Not found Ad"});
+                res.status(404).send({});
             }
         });
     })

@@ -53,5 +53,13 @@ angular.module('courseApp')
             return res;
         };
 
+        $scope.deleteAd = function(adId) {
+            AdFactory.getAds().remove({id: adId})
+                .$promise.then(function() {
+                    $state.reload();
+                })
+            ;
+        };
+
     }])
 ;
