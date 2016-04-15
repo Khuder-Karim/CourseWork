@@ -4,7 +4,7 @@
 
 angular.module('courseApp')
 
-    .controller('AdDetailController', ['$scope', '$stateParams', 'AdFactory', function($scope, $stateParams, AdFactory) {
+    .controller('AdDetailController', ['$scope', '$stateParams', '$sce', 'AdFactory', function($scope, $stateParams, $sce, AdFactory) {
         $scope.ad = {};
         AdFactory.getAds().get({id: $stateParams.id})
             .$promise.then(
@@ -16,5 +16,6 @@ angular.module('courseApp')
                 }
             )
         ;
+
     }])
 ;

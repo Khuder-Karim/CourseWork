@@ -10,6 +10,12 @@ angular.module('courseApp')
         AdFactory.getAds().query(
             function(response) {
                 $scope.ads = response;
+                $scope.MyAds = $scope.ads.filter(function(ad) {
+                    return ad.author == $rootScope.user._id;
+                });
+                $scope.ObserveAd = $scope.ads.filter(function(ad) {
+                    return $rootScope.user.liked.indexOf(ad._id) > -1
+                });
             },
             function(response) {
                 console.log("Error: " + response.status + " " + response.statusText);
@@ -39,8 +45,9 @@ angular.module('courseApp')
 
         $scope.isSubscription = function(adId) {
             var res = false;
-            $rootScope.user.liked.forEach(function(ad) {
-                if(ad._id == adId)
+
+            $rootScope.user.liked.forEach(function(like) {
+                if(like == adId)
                     res = true;
             });
             return res;

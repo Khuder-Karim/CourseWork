@@ -3,8 +3,8 @@
  */
 
 module.exports = function(req, res, next) {
-    if(req.body.username == 'karim') {
-        return next(new Error("Bad"));
+    if(req.user == null) {
+        return next(new Error(401));
     }
     next();
 };

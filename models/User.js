@@ -17,14 +17,10 @@ function User() {
     this.getUser = function(param, callback) {
         async.parallel([
             function(callback) {
-                Buyer.find(param)
-                    .populate('liked')
-                    .exec(callback);
+                Buyer.find(param, callback)
             },
             function(callback) {
-                Seller.find(param)
-                    .populate('liked')
-                    .exec(callback);
+                Seller.find(param, callback)
             }
         ], function(err, users) {
             if(err) callback(err);
