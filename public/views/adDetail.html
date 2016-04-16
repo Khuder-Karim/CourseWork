@@ -11,7 +11,7 @@
             <blockquote ng-repeat="comment in ad.comments">
                 <p>{{comment.rating}} Stars</p>
                 <p>{{comment.text}}</p>
-                <footer>{{comment.author.username}}, {{comment.created | date: 'longDate'}}</footer>
+                <footer>{{comment.author}}, {{comment.created | date: 'longDate'}}</footer>
             </blockquote>
 
             <form class="form-horizontal" name="commentForm"

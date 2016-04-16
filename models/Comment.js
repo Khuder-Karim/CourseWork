@@ -21,8 +21,7 @@ function Comment() {
             require: true
         },
         author: {
-            type: Schema.Types.ObjectId,
-            ref: 'Buyer',
+            type: String,
             require: true
         },
         created: {

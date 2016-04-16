@@ -55,9 +55,7 @@ function Ad() {
                 async.each(ad.comments, function(com, callback) {
                     require('./User').getUser({_id: com.author}, function(err, user) {
                         if(err) callback(err);
-                        com.author = user[0];
-                        com.author['liked'] = undefined;
-                        com.author['hashedPassword'] = undefined;
+                        com.author = user[0].username;
                         callback();
                     })
                 }, function(err) {
