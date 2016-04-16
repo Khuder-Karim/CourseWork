@@ -1,9 +1,11 @@
 <nav class="navbar navbar-default" ng-controller="UserController">
-    <div class="container">
+    <div class="container" id="header">
         <ul class="nav navbar-nav navbar-left">
-            <a ui-sref="app"><img src="../images/icon.png" alt="icon" id="icon"></a>
+            <li>
+                <a ui-sref="app" ui-sref-opts="{reload: true}"><img src="../images/icon.png" alt="icon" id="icon"></a>
+            </li>
         </ul>
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right" id="menu">
             <li><a ui-sref="app.login" ng-if="user==null">Войти</a></li>
             <li><a ui-sref="app.register" ng-if="user==null">Регистрация</a></li>
             <li><button class="btn btn-warning" ng-click="ProxyAdButton()">Дать Обьявление</button></li>

@@ -4,18 +4,29 @@
 
 angular.module('courseApp')
 
+.config(function ($httpProvider) {
+    $httpProvider.useApplyAsync(true);
+})
+
     .controller('AdController', ['$scope', '$rootScope', '$state', 'AdFactory', 'SubscribeFactory', 'SessionFactory', function($scope, $rootScope, $state, AdFactory, SubscribeFactory, SessionFactory) {
         $scope.adSchema = {};
+        $scope.findText = "";
 
         AdFactory.getAds().query(
             function(response) {
                 $scope.ads = response;
-                $scope.MyAds = $scope.ads.filter(function(ad) {
-                    return ad.author == $rootScope.user._id;
-                });
-                $scope.ObserveAd = $scope.ads.filter(function(ad) {
-                    return $rootScope.user.liked.indexOf(ad._id) > -1
-                });
+                $scope.MyAds = $rootScope.user ?
+                    $scope.ads.filter(function(ad) {
+                        return ad.author == $rootScope.user._id;
+                    })
+                    : {}
+                ;
+                $scope.ObserveAd = $rootScope.user ?
+                    $scope.ads.filter(function(ad) {
+                        return $rootScope.user.liked.indexOf(ad._id) > -1
+                    })
+                    : {}
+                ;
             },
             function(response) {
                 console.log("Error: " + response.status + " " + response.statusText);
@@ -59,6 +70,12 @@ angular.module('courseApp')
                     $state.reload();
                 })
             ;
+        };
+
+        $scope.find = function() {
+            AdFactory.getAds().query({find: $scope.findText}, function(response) {
+                $scope.ads = response;
+            });
         };
 
     }])

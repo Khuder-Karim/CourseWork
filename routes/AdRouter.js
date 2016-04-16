@@ -14,10 +14,17 @@ var User = require('../models/User');
 
 AdRouter.route('/')
     .get(function(req, res, next) {
-        Ad.find({}, function(err, ads) {
-            if(err) return next(err);
-            res.json(ads);
-        })
+        if(req.query.find) {
+            Ad.find({name: new RegExp(req.query.find, "i")}, function(err, ads) {
+                if(err) return next(err);
+                res.json(ads);
+            })
+        } else {
+            Ad.find({}, function(err, ads) {
+                if(err) return next(err);
+                res.json(ads);
+            })
+        }
     })
     .post(function(req, res, next) {
         var obj = req.body;
@@ -53,7 +60,14 @@ AdRouter.route('/:adId')
                         });
                     },
                     function(callback) {
-                        fs.unlink(path.join("public", ad.img), callback);
+                        var filePath = path.normalize(path.join("public", ad.img));
+                        console.log(filePath);
+                        fs.stat(filePath, function(err, stats) {
+                            if(!err && stats.isFile())
+                                fs.unlink(filePath, callback);
+                            else
+                                callback();
+                        });
                     },
                     function(callback) {
                         User.getUser({liked: ad._id}, function(err, user) {
@@ -107,4 +121,5 @@ AdRouter.route('/:adId/unsubscribe')
         });
     })
 ;
+
 module.exports = AdRouter;
