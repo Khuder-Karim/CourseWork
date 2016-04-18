@@ -85,11 +85,15 @@ function User() {
     };
 
     this.unsubscribe = function(req, callback) {
-        req.user.liked.forEach(function(ad, index) {
-            if(ad._id == req.params.adId)
+        async.each(req.user.liked, function(ad, callback) {
+            var index = req.user.liked.indexOf(ad);
+            if(index > -1) {
                 req.user.liked.splice(index, 1);
-        });
-        req.user.save(callback);
+                req.user.save(callback);
+            } else {
+                callback();
+            }
+        }, callback);
     }
 }
 

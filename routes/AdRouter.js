@@ -106,7 +106,7 @@ AdRouter.route('/:adId/comment')
 
 AdRouter.route('/:adId/subscribe')
     .post(function(req, res, next) {
-        User.subscribe(req, function(err, ad) {
+        User.subscribe(req, function(err) {
             if(err) return next(err);
             res.end();
         })
@@ -118,7 +118,7 @@ AdRouter.route('/:adId/unsubscribe')
         User.unsubscribe(req, function(err) {
             if(err) return next(err);
             res.end();
-        });
+        })
     })
 ;
 

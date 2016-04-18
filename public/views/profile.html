@@ -16,6 +16,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-2">
                     <strong class="adPrice">{{ad.price}} Грн.</strong>
+                    <button class="btn-warning" ng-click="deleteAd(ad._id)">Удалить</button>
                 </div>
             </div>
         </div>
@@ -37,6 +38,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-2">
                     <strong class="adPrice">{{ad.price}} Грн.</strong>
+                    <button class="btn-info" ng-click="unsubscribe(ad._id)">Отписатся</button>
                 </div>
             </div>
         </div>

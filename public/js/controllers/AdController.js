@@ -4,10 +4,6 @@
 
 angular.module('courseApp')
 
-.config(function ($httpProvider) {
-    $httpProvider.useApplyAsync(true);
-})
-
     .controller('AdController', ['$scope', '$rootScope', '$state', 'AdFactory', 'SubscribeFactory', 'SessionFactory', function($scope, $rootScope, $state, AdFactory, SubscribeFactory, SessionFactory) {
         $scope.adSchema = {};
         $scope.findText = "";

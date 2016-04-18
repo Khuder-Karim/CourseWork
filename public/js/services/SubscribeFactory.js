@@ -9,7 +9,7 @@ angular.module('courseApp')
             return $resource(baseURL+'ad/:id/subscribe');
         };
 
-        this.unsubscribe = function() {
+        this.unsubscribe = function(idAd) {
             return $resource(baseURL+'ad/:id/unsubscribe');
         };
 
