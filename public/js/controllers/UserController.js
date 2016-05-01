@@ -16,9 +16,8 @@ angular.module('courseApp')
             username: '',
             password: '',
             email: '',
-            phoneNumber: ''
+            phone: ''
         };
-        $scope.SellerCheckBox = false;
 
         $scope.errorMessage = '';
 

@@ -4,33 +4,28 @@
 
 var mongoose = require('../libs/mongoose');
 var Schema = mongoose.Schema;
-var util = require('util');
 
-function Comment() {
-    Schema.apply(this, arguments);
+var CommentSchema = new Schema({
+    text: {
+        type: String,
+        require: true
+    },
+    rating: {
+        type: Number,
+        min: 1,
+        max: 5,
+        require: true
+    },
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        require: true
+    },
+    created: {
+        type: Date,
+        default: Date.now()
+    }
+});
 
-    this.add({
-        text: {
-            type: String,
-            require: true
-        },
-        rating: {
-            type: Number,
-            min: 1,
-            max: 5,
-            require: true
-        },
-        author: {
-            type: String,
-            require: true
-        },
-        created: {
-            type: Date,
-            default: Date.now()
-        }
-    });
-}
-util.inherits(Comment, Schema);
-
-module.exports = mongoose.model('Comment', new Comment());
+module.exports = mongoose.model('Comment', CommentSchema);
 

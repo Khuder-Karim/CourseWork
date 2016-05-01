@@ -2,7 +2,6 @@
  * Created by Karim on 31.03.2016.
  */
 
-var FactoryUser = require('../models/FactoryUser').Factory;
 var User = require('../models/User');
 
 module.exports = function(req, res, next) {
@@ -10,12 +9,9 @@ module.exports = function(req, res, next) {
 
     if(!req.session.user) return next();
 
-    User.getUser({_id: req.session.user}, function(err, user) {
-        if(err)
-            return next(err);
-        if(user.length > 0) {
-            req.user = res.locals.user = user[0];
-        }
+    User.findById(req.session.user, function(err, user) {
+        if(err) return next(err);
+        req.user = res.locals.user = user;
         next();
     });
 };

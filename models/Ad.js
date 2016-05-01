@@ -4,69 +4,58 @@
 
 var mongoose = require('../libs/mongoose');
 var Schema = mongoose.Schema;
-var util = require('util');
-var Comment = require('./Comment');
-var async = require('async');
 
-function Ad() {
-    Schema.apply(this, arguments);
+var AdSchema = new Schema({
+    title: {
+        type: String,
+        require: true
+    },
+    description: {
+        type: String,
+        require: true
+    },
+    img: String,
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        require: true
+    },
+    comments: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Comment'
+    }],
+    created: {
+        type: Date,
+        default: Date.now()
+    },
+    price: {
+        type: Number,
+        require: true
+    }
+    // Here add category
+});
 
-    this.add({
-        name: {
-            type: String,
-            require: true
-        },
-        description: {
-            type: String
-        },
-        img: {
-            type: String
-        },
-        price: {
-            type: Number,
-            require: true
-        },
-        author: {
-            type: Schema.Types.ObjectId,
-            ref: 'Seller',
-            require: true
-        },
-        comments: [{
-            type: Schema.Types.ObjectId,
-            ref: 'Comment'
-        }],
-        created: {
-            type: Date,
-            default: Date.now()
-        }
-    });
+AdSchema.statics.getAdDetails = function(adID, callback) {
+    var Ad = this;
 
-    this.statics.getAdDetails = function(idAd, callback) {
-        var Ad = this;
+    Ad.findById(adID)
+        .populate('author', '-hashedPassword -created -liked')
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'author',
+                select: 'username'
+            }
+        })
+        .exec(function(err, ad) {
+            if(err)
+                callback(err);
+            else
+                callback(null, ad);
+        });
+};
 
-        Ad.findById(idAd)
-            .populate('author')
-            .populate('comments')
-            .exec(function(err, ad) {
-                if(!ad) {
-                    callback(null, ad);
-                    return;
-                }
-                async.each(ad.comments, function(com, callback) {
-                    require('./User').getUser({_id: com.author}, function(err, user) {
-                        if(err) callback(err);
-                        com.author = user[0].username;
-                        callback();
-                    })
-                }, function(err) {
-                    if(err) callback(err);
-                    callback(null, ad);
-                });
-            });
-    };
-}
-util.inherits(Ad, Schema);
 
-module.exports = mongoose.model('Ad', new Ad());
+module.exports = mongoose.model('Ad', AdSchema);
 
 

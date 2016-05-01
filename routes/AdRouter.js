@@ -4,12 +4,14 @@
 
 var express = require('express');
 var AdRouter = express.Router();
-var Ad = require('../models/Ad');
+var mongoose = require('../libs/mongoose');
+
 var async = require('async');
 var fs = require('fs');
 var path = require('path');
-var Comment = require('../models/Comment');
 
+var Ad = require('../models/Ad');
+var Comment = require('../models/Comment');
 var User = require('../models/User');
 
 AdRouter.route('/')
@@ -70,12 +72,12 @@ AdRouter.route('/:adId')
                         });
                     },
                     function(callback) {
-                        User.getUser({liked: ad._id}, function(err, user) {
-                            if(err) callback(err);
-                            async.each(user, function(us, callback) {
-                                var index = us.liked.indexOf(ad._id);
-                                us.liked.splice(index, 1);
-                                us.save(callback);
+                        User.find({liked: ad._id}, function(err, users) {
+                            if(err) return callback(err);
+                            async.each(users, function(user, callback) {
+                                var index = user.liked.indexOf((ad._id));
+                                user.liked.splice(index, 1);
+                                user.save(callback);
                             }, callback);
                         });
                     }
@@ -97,28 +99,41 @@ AdRouter.route('/:adId/comment')
     .post(function(req, res, next) {
         var obj = req.body;
         obj.author = req.user._id;
-        User.setComment(req.params.adId, obj, function(err, comment) {
-            if(err) return next(err);
-            res.end("Ok");
-        })
+        req.user.setComment(req.params.adId, obj, function(err) {
+            if(err) return callback(err);
+            res.end();
+        });
     })
 ;
 
 AdRouter.route('/:adId/subscribe')
     .post(function(req, res, next) {
-        User.subscribe(req, function(err) {
+        Ad.findById(req.params.adId, function(err, ad) {
             if(err) return next(err);
+            if(ad) {
+                req.user.liked.push(ad._id);
+                req.user.save(function(err) {
+                    if(err) return next(err);
+                })
+            }
             res.end();
-        })
+        });
     })
 ;
 
 AdRouter.route('/:adId/unsubscribe')
     .post(function(req, res, next) {
-        User.unsubscribe(req, function(err) {
+        Ad.findById(req.params.adId, function(err, ad) {
             if(err) return next(err);
+            if(ad) {
+                var index = req.user.liked.indexOf(ad._id);
+                req.user.liked.splice(index, 1);
+                req.user.save(function(err) {
+                    if(err) return next(err);
+                })
+            }
             res.end();
-        })
+        });
     })
 ;
 

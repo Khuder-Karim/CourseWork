@@ -11,7 +11,7 @@
             <blockquote ng-repeat="comment in ad.comments">
                 <p>{{comment.rating}} Stars</p>
                 <p>{{comment.text}}</p>
-                <footer>{{comment.author}}, {{comment.created | date: 'longDate'}}</footer>
+                <footer>{{comment.author.username}}, {{comment.created | date: 'longDate'}}</footer>
             </blockquote>
 
             <form class="form-horizontal" name="commentForm"
@@ -46,7 +46,7 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary" ng-disabled="commentForm.$invalid"d>Submit Comment</button>
+                        <button type="submit" class="btn btn-primary" ng-disabled="commentForm.$invalid">Submit Comment</button>
                     </div>
                 </div>
             </form>
@@ -56,7 +56,7 @@
             <p>Продавец:</p>
             <p><strong>{{ad.author.username}}</strong></p>
             <p><strong>{{ad.author.email}}</strong></p>
-            <p><strong>{{ad.author.phoneNumber}}</strong></p>
+            <p><strong>{{ad.author.phone}}</strong></p>
             <h3 style="text-align: center">Цена: <span class="label label-success">{{ad.price}} Грн</span></h3>
         </div>
     </div>
