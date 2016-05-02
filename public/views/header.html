@@ -8,7 +8,7 @@
         <ul class="nav navbar-nav navbar-right" id="menu">
             <li><a ui-sref="app.login" ng-if="user==null">Войти</a></li>
             <li><a ui-sref="app.register" ng-if="user==null">Регистрация</a></li>
-            <li><button class="btn btn-warning" ng-click="ProxyAdButton()">Дать Обьявление</button></li>
+            <li><a ui-sref="app.adEdit" ng-if="user!=null" class="btn btn-warning">Дать Обьявление</a></li>
             <li class="dropdown" ng-if="user!=null">
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user.username}} <span class="caret"></span></a>
                 <ul class="dropdown-menu">

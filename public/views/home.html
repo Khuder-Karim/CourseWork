@@ -6,12 +6,12 @@
         </div>
     </div>
     <div class="row adWrapper" ng-repeat="ad in ads">
-        <div class="col-xs-12 col-md-3 adImageBlock">
+        <div class="col-xs-3 adImageBlock">
             <a ui-sref="app.adDetails({id:ad._id})">
                 <img ng-src="{{ad.img}}" alt="{{ad.title}} Image" class="adImage">
             </a>
         </div>
-        <div class="col-xs-12 col-md-9 adInfoBlock">
+        <div class="col-xs-9 adInfoBlock">
             <div class="row">
                 <div class="col-xs-12 col-sm-10">
                     <a ui-sref="app.adDetails({id:ad._id})">

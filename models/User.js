@@ -15,7 +15,8 @@ var HttpError = require('../error');
 var UserSchema = new Schema({
     username: {
         type: String,
-        require: true
+        require: true,
+        unique: true
     },
     hashedPassword: {
         type: String,

@@ -17,7 +17,7 @@ var User = require('../models/User');
 AdRouter.route('/')
     .get(function(req, res, next) {
         if(req.query.find) {
-            Ad.find({name: new RegExp(req.query.find, "i")}, function(err, ads) {
+            Ad.find({title: new RegExp(req.query.find, "i")}, function(err, ads) {
                 if(err) return next(err);
                 res.json(ads);
             })

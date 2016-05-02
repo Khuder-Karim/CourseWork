@@ -1,9 +1,9 @@
 <div class="container" ng-controller="AdDetailController">
     <div class="row">
-        <div class="col-sm-12 col-md-10">
-            <h3>{{ad.name}}</h3>
+        <div class="col-xs-9">
+            <h3>{{ad.title}}</h3>
             <p>{{ad.created | date: 'longDate'}}</p>
-            <img ng-src="{{ad.img}}" alt="{{ad.name}} Image" height="450px">
+            <img ng-src="{{ad.img}}" alt="{{ad.title}} Image" height="450px">
             <hr>
             <p style="white-space:pre-wrap">{{ad.description}}</p>
             <hr>
@@ -52,8 +52,8 @@
             </form>
 
         </div>
-        <div class="col-sm-12 col-md-2">
-            <p>Продавец:</p>
+        <div class="col-xs-3">
+            <h3>Продавец:</h3>
             <p><strong>{{ad.author.username}}</strong></p>
             <p><strong>{{ad.author.email}}</strong></p>
             <p><strong>{{ad.author.phone}}</strong></p>

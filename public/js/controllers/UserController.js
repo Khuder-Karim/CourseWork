@@ -40,6 +40,7 @@ angular.module('courseApp')
                     $state.go('app');
                 },
                 function(err) {
+                    console.log(err);
                     $scope.errorMessage = err.data.message;
                 }
             );
@@ -48,24 +49,13 @@ angular.module('courseApp')
         $scope.register = function() {
             UserFactory.register().save($scope.registerData,
                 function() {
+                    SessionFactory.getSession();
                     $state.go('app');
                 },
                 function(err) {
                     $scope.errorMessage = err.data.message;
                 }
             );
-        };
-
-
-        $scope.ProxyAdButton = function() {
-            if($rootScope.user != null) {
-                if(!$rootScope.user.email)
-                    console.log("Вы авторизированы как покупатель");
-                else
-                    $state.go('app.adEdit');
-            } else {
-                $state.go('app.login');
-            }
         };
 
     }])

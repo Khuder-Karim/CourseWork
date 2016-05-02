@@ -1,16 +1,16 @@
 <div class="container" ng-controller="AdController">
     <h3>Мои обьявления</h3>
     <div class="row adWrapper" ng-repeat="ad in MyAds">
-        <div class="col-xs-12 col-md-3 adImageBlock">
+        <div class="col-xs-3 adImageBlock">
             <a ui-sref="app.adDetails({id:ad._id})">
-                <img ng-src="{{ad.img}}" alt="{{ad.name}} Image" class="adImage">
+                <img ng-src="{{ad.img}}" alt="{{ad.title}} Image" class="adImage">
             </a>
         </div>
-        <div class="col-xs-12 col-md-9 adInfoBlock">
+        <div class="col-xs-9 adInfoBlock">
             <div class="row">
                 <div class="col-xs-12 col-sm-10">
                     <a ui-sref="app.adDetails({id:ad._id})">
-                        <h4 class="AdHeader">{{ad.name}}</h4>
+                        <h4 class="AdHeader">{{ad.title}}</h4>
                     </a>
                     {{ad.created | date: 'longDate'}}
                 </div>
@@ -23,16 +23,16 @@
     </div>
     <h3>Товары за которыми я слежу</h3>
     <div class="row adWrapper" ng-repeat="ad in ObserveAd">
-        <div class="col-xs-12 col-md-3 adImageBlock">
+        <div class="col-xs-3 adImageBlock">
             <a ui-sref="app.adDetails({id:ad._id})">
-                <img ng-src="{{ad.img}}" alt="{{ad.name}} Image" class="adImage">
+                <img ng-src="{{ad.img}}" alt="{{ad.title}} Image" class="adImage">
             </a>
         </div>
-        <div class="col-xs-12 col-md-9 adInfoBlock">
+        <div class="col-xs-9 adInfoBlock">
             <div class="row">
                 <div class="col-xs-12 col-sm-10">
                     <a ui-sref="app.adDetails({id:ad._id})">
-                        <h4 class="AdHeader">{{ad.name}}</h4>
+                        <h4 class="AdHeader">{{ad.title}}</h4>
                     </a>
                     {{ad.created | date: 'longDate'}}
                 </div>
