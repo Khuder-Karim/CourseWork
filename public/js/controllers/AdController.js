@@ -30,8 +30,11 @@ angular.module('courseApp')
         );
 
         $scope.Submit = function() {
-            var uploadUrl = '/ad';
-            AdFactory.post(uploadUrl, $scope.adSchema);
+            if(parseInt($scope.adSchema.price)) {
+                AdFactory.post($scope.adSchema);
+            } else {
+                $scope.errorMessage = "Enter correct price";
+            }
         };
 
         $scope.subscribe = function(adId) {

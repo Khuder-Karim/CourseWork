@@ -14,6 +14,9 @@ var Ad = require('../models/Ad');
 var Comment = require('../models/Comment');
 var User = require('../models/User');
 
+var multiparty = require('multiparty');
+var cloudinary = require('../libs/cloudinary');
+
 AdRouter.route('/')
     .get(function(req, res, next) {
         if(req.query.find) {
@@ -29,12 +32,34 @@ AdRouter.route('/')
         }
     })
     .post(function(req, res, next) {
-        var obj = req.body;
-        obj.author = req.user._id;
-        obj.img = 'images/ad/' + req.files.file.name;
-        Ad.create(obj, function(err, ad) {
+        var form = new multiparty.Form();
+        var author = req.user._id;
+
+        function handler(err, ad) {
             if(err) return next(err);
             res.end();
+        }
+
+        form.parse(req, function(err, fields, files) {
+            if(err) return next(err);
+            var obj = {
+                title: fields.title[0],
+                description: fields.description[0],
+                price: fields.price[0],
+                author: author
+            };
+
+            if(files.file) {
+                cloudinary.uploader.upload(files.file[0].path, function(result) {
+                    console.log(result.public_id);
+                    if(result.url) {
+                        obj.img = result.url;
+                        Ad.create(obj, handler);
+                    }
+                })
+            } else {
+                Ad.create(obj, handler);
+            }
         });
     })
 ;
@@ -62,14 +87,18 @@ AdRouter.route('/:adId')
                         });
                     },
                     function(callback) {
-                        var filePath = path.normalize(path.join("public", ad.img));
-                        console.log(filePath);
-                        fs.stat(filePath, function(err, stats) {
-                            if(!err && stats.isFile())
-                                fs.unlink(filePath, callback);
-                            else
+                        if(ad.img) {
+                            var arr = ad.img.split('/');
+                            var public_id = arr[arr.length - 1].split('.')[0];
+                            console.log(public_id);
+
+                            cloudinary.uploader.destroy(public_id, function(result) {
+                                console.log(result);
                                 callback();
-                        });
+                            })
+                        } else {
+                            callback();
+                        }
                     },
                     function(callback) {
                         User.find({liked: ad._id}, function(err, users) {

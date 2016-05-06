@@ -3,7 +3,8 @@
         <div class="col-xs-9">
             <h3>{{ad.title}}</h3>
             <p>{{ad.created | date: 'longDate'}}</p>
-            <img ng-src="{{ad.img}}" alt="{{ad.title}} Image" height="450px">
+            <!--<cl-image public-id="{{ad.img}}"></cl-image>-->
+            <img ng-src="{{ad.img}}" alt="ad.title">
             <hr>
             <p style="white-space:pre-wrap">{{ad.description}}</p>
             <hr>

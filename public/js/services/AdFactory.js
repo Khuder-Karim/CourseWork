@@ -11,13 +11,13 @@ angular.module('courseApp')
                 {'remove': {method: 'DELETE'}});
         };
 
-        this.post = function(uploadUrl, data) {
+        this.post = function(data) {
             var fd = new FormData();
 
             for(var key in data)
                 fd.append(key, data[key]);
 
-            $http.post(uploadUrl, fd, {
+            $http.post(baseURL+'ad/', fd, {
                 transformRequest: angular.indentity,
                 headers: { 'Content-Type': undefined }
             }).then(

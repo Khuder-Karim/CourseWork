@@ -8,7 +8,8 @@
     <div class="row adWrapper" ng-repeat="ad in ads">
         <div class="col-xs-3 adImageBlock">
             <a ui-sref="app.adDetails({id:ad._id})">
-                <img ng-src="{{ad.img}}" alt="{{ad.title}} Image" class="adImage">
+                <!--<cl-image public-id="{{ad.img}}" class="adImage"></cl-image>-->
+                <img ng-src="{{ad.img}}" alt="ad.title" class="adImage">
             </a>
         </div>
         <div class="col-xs-9 adInfoBlock">

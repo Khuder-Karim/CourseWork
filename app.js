@@ -3,7 +3,6 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 
-var multer = require('multer');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var config = require('./config');
@@ -18,7 +17,6 @@ var app = express();
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(multer({dest: './public/images/ad/'}));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -60,6 +58,8 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500).json(err);
 });
 
-app.listen(config.get('port'), function() {
-    console.log("Listen port: ", config.get('port'));
+var port = process.env.PORT || config.get('port');
+
+app.listen(port, function() {
+    console.log("Listen port: ", port);
 });
