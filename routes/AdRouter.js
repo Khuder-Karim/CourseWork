@@ -51,7 +51,6 @@ AdRouter.route('/')
 
             if(files.file) {
                 cloudinary.uploader.upload(files.file[0].path, function(result) {
-                    console.log(result.public_id);
                     if(result.url) {
                         obj.img = result.url;
                         Ad.create(obj, handler);
@@ -90,7 +89,6 @@ AdRouter.route('/:adId')
                         if(ad.img) {
                             var arr = ad.img.split('/');
                             var public_id = arr[arr.length - 1].split('.')[0];
-                            console.log(public_id);
 
                             cloudinary.uploader.destroy(public_id, function(result) {
                                 console.log(result);
