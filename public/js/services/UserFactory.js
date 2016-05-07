@@ -4,7 +4,7 @@
 
 angular.module('courseApp')
 
-    .constant('baseURL', "http://localhost:3000/")
+    .constant('baseURL', "https://coursework-app.herokuapp.com/")
 
     .service('UserFactory', ['$resource', 'baseURL', function($resource, baseURL) {
         this.logout = function() {

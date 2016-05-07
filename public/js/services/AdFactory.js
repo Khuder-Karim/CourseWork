@@ -3,7 +3,7 @@
  */
 
 angular.module('courseApp')
-    .constant('baseURL', "http://localhost:3000/")
+    .constant('baseURL', "https://coursework-app.herokuapp.com/")
     .service('AdFactory', ['$http', '$state', '$resource', 'baseURL', function($http, $state, $resource, baseURL) {
 
         this.getAds = function() {
