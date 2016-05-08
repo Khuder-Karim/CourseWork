@@ -1,0 +1,25 @@
+//
+   Created by Karim on 08.05.2016.
+
+extends layout/page
+
+block content
+    .container
+        .row
+            each ad in ads
+                .product.col-xs-12.col-sm-4.col-md-2.col-lg-1
+                    a(href="/ad/#{ad._id}")
+                        img(src="#{ad.img}", alt="#{ad.title}", style="max-width: 100%")
+
+                    a(href="/ad/#{ad._id}")
+                        h4 #{ad.title}
+                    span #{ad.created}
+                    h3
+                        strong.label.label-success #{ad.price} Грн
+                    //if user
+                    //    if user.username === ad.author
+                    //        button.btn-info.deleteAd-btn Удалить
+                    //    if isSubscription(ad._id)
+                    //        button.btn-info.subscription-btn Подписатся
+                    //    else
+                    //        button.btn-info.unSubscription-btn Отписатся

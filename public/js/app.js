@@ -72,7 +72,14 @@ angular.module('courseApp', ['ui.router', 'ngResource'])
 
         $urlRouterProvider.otherwise('/');
     })
-    .run(['SessionFactory', function(SessionFactory) {
+    .run(['SessionFactory', '$rootScope', function(SessionFactory, $rootScope) {
         SessionFactory.getSession();
+        $rootScope.previousState;
+        $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
+            $rootScope.previousState = from.name;
+        });
     }])
+
+    .constant('baseURL', "http://localhost:3000/")
+    //.constant('baseURL', "https://coursework-app.herokuapp.com/") // реальный сервер!
 ;

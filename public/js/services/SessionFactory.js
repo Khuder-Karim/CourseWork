@@ -2,8 +2,6 @@
  * Created by Karim on 11.04.2016.
  */
 angular.module('courseApp')
-    .constant('baseURL', "https://coursework-app.herokuapp.com/")
-
     .service('SessionFactory', ['$resource', '$rootScope', 'baseURL', function($resource, $rootScope, baseURL) {
         this.getSession = function() {
             $resource(baseURL+'session').get()

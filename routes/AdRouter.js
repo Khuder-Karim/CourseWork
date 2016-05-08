@@ -19,18 +19,27 @@ var cloudinary = require('../libs/cloudinary');
 
 AdRouter.route('/')
     .get(function(req, res, next) {
-        if(req.query.find) {
-            Ad.find({title: new RegExp(req.query.find, "i")}, function(err, ads) {
-                if(err) return next(err);
-                res.json(ads);
-            })
-        } else {
-            Ad.find({}, function(err, ads) {
-                if(err) return next(err);
-                res.json(ads);
-            })
-        }
+
+        var handler = function(err, ads) {
+            if(err) return next(err);
+            console.log(ads[0].created.getMonth());
+            res.render('index', {ads: ads});
+        };
+
+        if(req.query.searchField)
+            Ad.find({title: new RegExp(req.query.searchField, "i")}, handler);
+        else
+            Ad.find({}, handler);
     })
+;
+
+AdRouter.route('/adEdit')
+    .get(function(req, res) {
+        res.render('adEdit');
+    })
+;
+
+AdRouter.route('/ad')
     .post(function(req, res, next) {
         var form = new multiparty.Form();
         var author = req.user._id;
@@ -63,7 +72,7 @@ AdRouter.route('/')
     })
 ;
 
-AdRouter.route('/:adId')
+AdRouter.route('/ad/:adId')
     .get(function(req,res,next){
         Ad.getAdDetails(req.params.adId, function(err, ad) {
             if(err) return next(err);
@@ -122,7 +131,7 @@ AdRouter.route('/:adId')
     })
 ;
 
-AdRouter.route('/:adId/comment')
+AdRouter.route('/ad/:adId/comment')
     .post(function(req, res, next) {
         var obj = req.body;
         obj.author = req.user._id;
@@ -133,7 +142,7 @@ AdRouter.route('/:adId/comment')
     })
 ;
 
-AdRouter.route('/:adId/subscribe')
+AdRouter.route('/ad/:adId/subscribe')
     .post(function(req, res, next) {
         Ad.findById(req.params.adId, function(err, ad) {
             if(err) return next(err);
@@ -148,7 +157,7 @@ AdRouter.route('/:adId/subscribe')
     })
 ;
 
-AdRouter.route('/:adId/unsubscribe')
+AdRouter.route('/ad/:adId/unsubscribe')
     .post(function(req, res, next) {
         Ad.findById(req.params.adId, function(err, ad) {
             if(err) return next(err);

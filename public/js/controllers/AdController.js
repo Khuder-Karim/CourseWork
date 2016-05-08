@@ -73,9 +73,8 @@ angular.module('courseApp')
 
         $scope.find = function() {
             AdFactory.getAds().query({find: $scope.findText}, function(response) {
-                $scope.ads = response;
+                //$scope.ads = response;
             });
         };
-
     }])
 ;

@@ -12,8 +12,8 @@ var session = require('express-session');
 var app = express();
 
 // view engine setup
-//app.set('views', path.join(__dirname, 'views'));
-//app.set('view engine', 'jade');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -42,9 +42,11 @@ app.use(require('node-sass-middleware')({
     outputStyle: 'compressed',
     prefix: '/css'
 }));
-app.use(express.static(path.join(__dirname, 'public')));
 
 require('./routes')(app);
+
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 // catch 404 and forward to error handler
 
@@ -55,7 +57,12 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(err, req, res, next) {
-    res.status(err.status || 500).json(err);
+    res.status(err.status || 500);
+    if(res.req.headers['x-requested-with'] == 'XMLHttpRequest') {
+        res.json(err);
+    } else {
+        res.render("error", {error: err});
+    }
 });
 
 var port = process.env.PORT || config.get('port');

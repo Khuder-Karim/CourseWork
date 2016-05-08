@@ -17561,7 +17561,7 @@ function adjustMatcher(matcher) {
     return new RegExp('^' + matcher + '$');
   } else if (isRegExp(matcher)) {
     // The only other type of matcher allowed is a Regexp.
-    // Match entire URL / disallow partial matches.
+    // Match entire URL / disallow partials matches.
     // Flags are reset (i.e. no global, ignoreCase or multiline)
     return new RegExp('^' + matcher.source + '$');
   } else {

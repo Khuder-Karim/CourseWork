@@ -1,0 +1,18 @@
+//
+   Created by Karim on 08.05.2016.
+
+extends layout/page
+
+block content
+    .container
+        form.form-horizontal(role="form", name="AdForm")
+            .form-group(ng-class="{ 'has-error' : AdForm.title.$error.required && !AdForm.title.$pristine }")
+                label.col-sm-2.control-label(for="title")
+                .col-sm-10
+                    input.form-control(type="text", id="title", name="title", required)
+                    span.help-block(ng-show="AdForm.title.$error.required && !AdForm.title.$pristine").
+                        Заголовок обьявления обьязатльно для заполнения
+
+block append script
+    script(src="vendor/bower_components/angular/angular.min.js")
+    script(src="/js/controllers/AdController.js")

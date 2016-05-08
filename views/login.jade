@@ -1,0 +1,26 @@
+//
+   Created by Karim on 08.05.2016.
+
+extends layout/page
+
+block content
+    .container
+        .row
+            form.col-sm-offset-2.col-sm-6.form-horizontal(role="form", name="LoginForm")
+                .form-group.required
+                    label.col-sm-4.control-label(for="username") First Name
+                    .col-sm-8
+                        input.form-control(type="text", id="username", name="username", placeholder="Enter username", required)
+                .form-group.required
+                    label.col-sm-4.control-label(for="password") Password
+                    .col-sm-8
+                        input.form-control(type="password", id="password", name="password", placeholder="Enter password", required)
+
+                .errorResponse.col-sm-offset-4.help-block
+
+                .form-group
+                    .col-sm-offset-4.col-sm-10
+                        button.btn.btn-primary(type="submit") Войти
+
+
+

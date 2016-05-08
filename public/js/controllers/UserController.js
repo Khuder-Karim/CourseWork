@@ -1,62 +1,61 @@
-/**
- * Created by Karim on 10.04.2016.
- */
+$(document).ready(function() {
 
-angular.module('courseApp')
+    $('form[name="searchForm"]').submit(function(e) {
 
-    .controller('UserController', ['$stateParams', '$scope', '$rootScope', '$state', 'UserFactory', 'SessionFactory', function($stateParams, $scope, $rootScope, $state,
-                                                                                                 UserFactory, SessionFactory) {
+        var form = $(this);
+        $.ajax({
+            method: 'GET',
+            url: '/',
+            data: form.serialize()
+        });
+    });
 
-        $scope.userObject = {
-            username: '',
-            password: ''
-        };
+    $('.logout-btn').click(function() {
+        $.post('/logout')
+            .done(function() {
+                window.location.href = "/";
+            })
+        ;
+    });
 
-        $scope.registerData = {
-            username: '',
-            password: '',
-            email: '',
-            phone: ''
-        };
+    $('form[name="LoginForm"]').submit(function(e) {
+        e.preventDefault();
+        var form = $(this);
 
-        $scope.errorMessage = '';
+        $.post('/login', form.serialize())
+            .done(function() {
+                window.location.href = "/";
+            })
+            .fail(function(jqXHR) {
+                var error = JSON.parse(jqXHR.responseText);
+                $('.errorResponse').html(error.message);
+            })
+        ;
+    });
 
-        $scope.logout = function() {
-            UserFactory.logout().save(
-                function() {
-                    SessionFactory.getSession();
-                    $state.go('app');
-                },
-                function(err) {
-                    console.log(err);
-                }
-            );
-        };
+    $('form[name="RegisterForm"]').submit(function(e) {
+        e.preventDefault();
+        var form = $(this);
 
-        $scope.login = function() {
-            UserFactory.login().save($scope.userObject,
-                function() {
-                    SessionFactory.getSession();
-                    $state.go('app');
-                },
-                function(err) {
-                    console.log(err);
-                    $scope.errorMessage = err.data.message;
-                }
-            );
-        };
+        var phone = $('input[name="phone"]').val();
 
-        $scope.register = function() {
-            UserFactory.register().save($scope.registerData,
-                function() {
-                    SessionFactory.getSession();
-                    $state.go('app');
-                },
-                function(err) {
-                    $scope.errorMessage = err.data.message;
-                }
-            );
-        };
+        if(phone && (phone.length != 10 || !$.isNumeric(phone) || phone[0] != 0)) {
+            $('.errorResponse').html("Введите валидный номер телефона <br> (Пример: 0548542354)");
+            return;
+        }
 
-    }])
-;
+        $.post('/user', form.serialize())
+            .done(function(response) {
+                if(!response)
+                    window.location.href = "/";
+                else
+                    $('.errorResponse').html(JSON.parse(response.responseText).message);
+
+            })
+            .fail(function(jqXHR) {
+                var error = JSON.parse(jqXHR.responseText);
+                $('.errorResponse').html(error.message);
+            })
+    })
+
+});
