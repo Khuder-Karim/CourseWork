@@ -3,10 +3,10 @@
  */
 
 $(document).ready(function() {
-    $('.commentAd').click(function(e) {
+    $('form[name="commentForm"]').submit(function(e) {
         e.preventDefault();
 
-        var ad_id = $(e.target).attr('data-id');
+        var ad_id = $(this).attr('data-id');
         $.post('/ad/' + ad_id + '/comment', $('form[name="commentForm"]').serialize())
             .done(function() {
                 location.reload();

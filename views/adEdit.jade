@@ -6,30 +6,31 @@ extends layout/page
 block content
     .container
         .row
-            form.form-horizontal(role="form", name="AdForm")
-                .form-group.required
-                    label.col-sm-2.control-label(for="title") Title ad
-                    .col-sm-10
-                        input.form-control(type="text", id="title", name="title", placeholder="Enter title ad", required)
-                .form-group.required
-                    label.col-sm-2.control-label(for="description") Description
-                    .col-sm-10
-                        textarea.form-control(id="description", name="description", rows="15", required)
-                .form-group
-                    label.col-sm-2.control-label(for="img") Attach img
-                    .col-sm-10
-                        input(type="file", id="img", name="file")
-                .form-group.required
-                    label.col-sm-2.control-label(for="price") Price
-                    .col-sm-10
-                        input.form-control(type="text", id="price", name="price", placeholder="Enter price", required)
+            .col-xs-12
+                form.form-horizontal(role="form", name="AdForm")
+                    .form-group.required
+                        label.col-sm-2.control-label(for="title") Title ad
+                        .col-sm-10
+                            input.form-control(type="text", id="title", name="title", placeholder="Enter title ad", required)
+                    .form-group.required
+                        label.col-sm-2.control-label(for="description") Description
+                        .col-sm-10
+                            textarea.form-control(id="description", name="description", rows="15", required)
+                    .form-group
+                        label.col-sm-2.control-label(for="img") Attach img
+                        .col-sm-10
+                            input(type="file", id="img", name="file")
+                    .form-group.required
+                        label.col-sm-2.control-label(for="price") Price
+                        .col-sm-10
+                            input.form-control(type="text", id="price", name="price", placeholder="Enter price", required)
 
 
-                .errorResponse.col-sm-offset-2.help-block
+                    .errorResponse.col-sm-offset-2.help-block
 
-                .form-group
-                    .col-sm-offset-2.col-sm-10
-                        button.btn.btn-primary(type="submit") Опубликовать
+                    .form-group
+                        .col-sm-offset-2.col-sm-10
+                            button.btn.btn-primary(type="submit") Опубликовать
 
 block append script
     script(src="/js/controllers/AdController.js")

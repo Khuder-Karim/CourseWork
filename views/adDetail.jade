@@ -41,34 +41,37 @@ block content
 
                 hr
 
-                form.form-horizontal(name="commentForm")
-                    .form-group.required
-                        label.col-xs-12.control-label(for="comment", style="text-align: left") Ваш коментарий
-                        .col-xs-12
-                            textarea.form-control(id="comment", name="text", rows="6", placeholder="Введите коментарий", required)
+                if user
+                    form.form-horizontal(name="commentForm", data-id="#{ad._id}")
+                        .form-group.required
+                            label.col-xs-12.control-label(for="comment", style="text-align: left") Ваш коментарий
+                            .col-xs-12
+                                textarea.form-control(id="comment", name="text", rows="6", placeholder="Введите коментарий", required)
 
-                    .form-group.required
-                        label.col-sm-2.control-label Ваша оценка
-                        .col-sm-10
-                            label.radio-inline
-                                input(type="radio", name="rating", value="1")
-                                strong 1
-                            label.radio-inline
-                                input(type="radio", name="rating", value="2")
-                                strong 2
-                            label.radio-inline
-                                input(type="radio", name="rating", value="3")
-                                strong 3
-                            label.radio-inline
-                                input(type="radio", name="rating", value="4")
-                                strong 4
-                            label.radio-inline
-                                input(type="radio", name="rating", value="5", checked)
-                                strong 5
+                        .form-group.required
+                            label.col-sm-2.control-label Ваша оценка
+                            .col-sm-10
+                                label.radio-inline
+                                    input(type="radio", name="rating", value="1")
+                                    strong 1
+                                label.radio-inline
+                                    input(type="radio", name="rating", value="2")
+                                    strong 2
+                                label.radio-inline
+                                    input(type="radio", name="rating", value="3")
+                                    strong 3
+                                label.radio-inline
+                                    input(type="radio", name="rating", value="4")
+                                    strong 4
+                                label.radio-inline
+                                    input(type="radio", name="rating", value="5", checked)
+                                    strong 5
 
-                    .form-group
-                        .col-sm-offset-2.col-sm-10
-                            button.btn.btn-primary.commentAd(type="submit", data-id="#{ad._id}") Коментировать
+                        .form-group
+                            .col-sm-offset-2.col-sm-10
+                                button.btn.btn-primary(type="submit") Коментировать
+                else
+                    h4(style="text-align: center") Войдите в аккаунт что бы оставлять коментарии
 
 
 block append script

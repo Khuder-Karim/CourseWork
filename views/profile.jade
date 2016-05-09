@@ -1,3 +1,49 @@
 //
    Created by Karim on 08.05.2016.
 
+extends layout/page
+
+block content
+    .container
+        .row
+            h4 Ваши обьявления:
+            each ad in myAds
+                - function parseDate(date) {return date.toString().split(' ').splice(1, 4).concat();};
+                .product.col-xs-12.col-sm-4
+                    a(href="/ad/#{ad._id}")
+                        if ad.img
+                            img(src="#{ad.img}", alt="#{ad.title}", style="max-width: 100%; padding-top: 15px;")
+                        else
+                            img(src="/images/no_photo.jpg", alt="#{ad.title}", style="max-width: 100%; padding-top: 15px;")
+                    a(href="/ad/#{ad._id}")
+                        h4 #{ad.title}
+                    span #{parseDate(ad.created)}
+                    .row.manipuleAd
+                        h3.col-xs-6
+                            strong.label.label-success #{ad.price} Грн
+                        h3.col-xs-6(style="text-align: right")
+                            button.btn.btn-danger.deleteAd-btn(data-id="#{ad._id}")
+                                span.glyphicon.glyphicon-trash(aria-hidden="true")
+
+        .row
+            h4 Избранные:
+            each ad in likedAds
+                - function parseDate(date) {return date.toString().split(' ').splice(1, 4).concat();};
+                .product.col-xs-12.col-sm-4
+                    a(href="/ad/#{ad._id}")
+                        if ad.img
+                            img(src="#{ad.img}", alt="#{ad.title}", style="max-width: 100%; padding-top: 15px;")
+                        else
+                            img(src="/images/no_photo.jpg", alt="#{ad.title}", style="max-width: 100%; padding-top: 15px;")
+                    a(href="/ad/#{ad._id}")
+                        h4 #{ad.title}
+                    span #{parseDate(ad.created)}
+                    .row.manipuleAd
+                        h3.col-xs-6
+                            strong.label.label-success #{ad.price} Грн
+                        h3.col-xs-6(style="text-align: right")
+                            button.btn.btn-info.unSubscription-btn(data-id="#{ad._id}")
+                                span.glyphicon.glyphicon-share
+
+block append script
+    script(src="/js/controllers/AdController.js")

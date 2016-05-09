@@ -9,6 +9,6 @@ module.exports = function(app) {
 
     app.use('/register', function(req, res) {
         res.render('register');
-    })
+    });
 };
 

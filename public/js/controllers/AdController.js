@@ -16,7 +16,7 @@ $(document).ready(function() {
             contentType: false
         })
             .done(function() {
-                window.location.href = "/";
+                window.location.href = "/myaccount";
             })
             .fail(function(jqXHR) {
                 var error = JSON.parse(jqXHR);
@@ -34,7 +34,7 @@ $(document).ready(function() {
             type: 'DELETE'
         })
             .done(function() {
-                window.location.href = '/';
+                location.reload();
             })
         ;
     });
@@ -45,7 +45,7 @@ $(document).ready(function() {
             target = target.parent();
         $.post('/ad/' + target.attr('data-id') + '/subscribe')
             .done(function() {
-                window.location.href = '/';
+                location.reload();
             })
         ;
     });
@@ -56,7 +56,7 @@ $(document).ready(function() {
             target = target.parent();
         $.post('/ad/' + target.attr('data-id') + '/unsubscribe')
             .done(function() {
-                window.location.href = '/';
+                location.reload();
             })
         ;
     });

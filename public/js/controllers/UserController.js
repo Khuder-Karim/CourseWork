@@ -27,7 +27,7 @@ $(document).ready(function() {
 
         $.post('/login', form.serialize())
             .done(function() {
-                window.location.href = "/";
+                window.location.href = "/myaccount";
             })
             .fail(function(jqXHR) {
                 var error = JSON.parse(jqXHR.responseText);
@@ -59,6 +59,7 @@ $(document).ready(function() {
                 var error = JSON.parse(jqXHR.responseText);
                 $('.errorResponse').html(error.message);
             })
-    })
+        ;
+    });
 
 });

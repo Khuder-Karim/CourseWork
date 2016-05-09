@@ -12,13 +12,13 @@ block content
                 .product.col-xs-12.col-sm-4
                     a(href="/ad/#{ad._id}")
                         if ad.img
-                            img(src="#{ad.img}", alt="#{ad.title}", style="max-width: 100%")
+                            img(src="#{ad.img}", alt="#{ad.title}", style="max-width: 100%; padding-top: 15px;")
                         else
-                            img(src="/images/no_photo.jpg", alt="#{ad.title}", style="max-width: 100%")
+                            img(src="/images/no_photo.jpg", alt="#{ad.title}", style="max-width: 100%; padding-top: 15px;")
                     a(href="/ad/#{ad._id}")
                         h4 #{ad.title}
                     span #{parseDate(ad.created)}
-                    .row
+                    .row.manipuleAd
                         h3.col-xs-6
                             strong.label.label-success #{ad.price} Грн
                         h3.col-xs-6(style="text-align: right")

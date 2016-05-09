@@ -17,6 +17,27 @@ var User = require('../models/User');
 var multiparty = require('multiparty');
 var cloudinary = require('../libs/cloudinary');
 
+AdRouter.route('/myaccount')
+    .get(function(req, res, next) {
+        var myAds = [];
+        var likedAds = [];
+
+        async.series([
+            function(callback) {
+                Ad.find({author: req.user._id}, callback)
+            },
+            function(callback) {
+                Ad.find({_id: {$in: req.user.liked}}, callback);
+            }
+        ], function(err, ads) {
+            if(err) return next(err);
+            myAds = ads[0];
+            likedAds = ads[1];
+            res.render('profile', {myAds: myAds, likedAds: likedAds});
+        });
+    })
+;
+
 AdRouter.route('/')
     .get(function(req, res, next) {
         var handler = function(err, ads) {
