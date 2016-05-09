@@ -3,6 +3,11 @@ $(document).ready(function() {
     $('form[name="AdForm"]').submit(function(e) {
         e.preventDefault();
 
+        if(!$.isNumeric($('input[name="price"]').val())) {
+            $('.errorResponse').html('Введите валидну цену');
+            return;
+        }
+
         $.ajax({
             url: '/ad',
             type: 'POST',
@@ -34,45 +39,25 @@ $(document).ready(function() {
         ;
     });
 
+    $('.subscription-btn').click(function(e) {
+        var target = $(e.target);
+        if(!target.attr('data-id'))
+            target = target.parent();
+        $.post('/ad/' + target.attr('data-id') + '/subscribe')
+            .done(function() {
+                window.location.href = '/';
+            })
+        ;
+    });
+
+    $('.unSubscription-btn').click(function(e) {
+        var target = $(e.target);
+        if(!target.attr('data-id'))
+            target = target.parent();
+        $.post('/ad/' + target.attr('data-id') + '/unsubscribe')
+            .done(function() {
+                window.location.href = '/';
+            })
+        ;
+    });
 });
-        //$scope.Submit = function() {
-        //    if(parseInt($scope.adSchema.price)) {
-        //        AdFactory.post($scope.adSchema);
-        //    } else {
-        //        $scope.errorMessage = "Enter correct price";
-        //    }
-        //};
-        //
-        //$scope.subscribe = function(adId) {
-        //    SubscribeFactory.subscribe().save({id: adId}, {}, function() {
-        //        console.log("subscribe");
-        //        SessionFactory.getSession();
-        //        $state.reload();
-        //    });
-        //};
-        //
-        //$scope.unsubscribe = function(adId) {
-        //    SubscribeFactory.unsubscribe().save({id: adId}, {}, function() {
-        //        console.log("unsubscribe");
-        //        SessionFactory.getSession();
-        //        $state.reload();
-        //    });
-        //};
-        //
-        //$scope.isSubscription = function(adId) {
-        //    var res = false;
-        //
-        //    $rootScope.user.liked.forEach(function(like) {
-        //        if(like == adId)
-        //            res = true;
-        //    });
-        //    return res;
-        //};
-        //
-        //$scope.deleteAd = function(adId) {
-        //    AdFactory.getAds().remove({id: adId})
-        //        .$promise.then(function() {
-        //            $state.reload();
-        //        })
-        //    ;
-        //};

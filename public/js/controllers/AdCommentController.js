@@ -2,19 +2,15 @@
  * Created by Karim on 13.04.2016.
  */
 
-angular.module('courseApp')
+$(document).ready(function() {
+    $('.commentAd').click(function(e) {
+        e.preventDefault();
 
-    .controller('AdCommentController', ['$scope', '$stateParams', '$state', 'AdFactory', function($scope, $stateParams, $state, AdFactory) {
-
-        $scope.comment = {rating:5, text:""};
-
-        $scope.submitComment = function () {
-            AdFactory.postComment().save({id: $stateParams.id}, $scope.comment, function(response) {
-                $scope.commentForm.$setPristine();
-                $scope.comment = {rating:5, text: ""};
-                $state.reload();
-            });
-        };
-
-    }])
-;
+        var ad_id = $(e.target).attr('data-id');
+        $.post('/ad/' + ad_id + '/comment', $('form[name="commentForm"]').serialize())
+            .done(function() {
+                location.reload();
+            })
+        ;
+    })
+});

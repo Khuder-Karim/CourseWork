@@ -1,13 +1,16 @@
 $(document).ready(function() {
 
     $('form[name="searchForm"]').submit(function(e) {
-
         var form = $(this);
+        var searchField = $('input[name="searchField"]').val();
         $.ajax({
             method: 'GET',
             url: '/',
             data: form.serialize()
-        });
+        })
+            .done(function() {
+                window.location.href = '/?searchField=' + searchField;
+            })
     });
 
     $('.logout-btn').click(function() {

@@ -80,7 +80,7 @@ AdRouter.route('/ad/:adId')
     .get(function(req,res,next){
         Ad.getAdDetails(req.params.adId, function(err, ad) {
             if(err) return next(err);
-            res.json(ad);
+            res.render('adDetail', {ad: ad});
         });
     })
     .delete(function(req, res, next){

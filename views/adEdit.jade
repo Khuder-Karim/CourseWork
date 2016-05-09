@@ -6,8 +6,7 @@ extends layout/page
 block content
     .container
         .row
-            form.form-horizontal(role="form", name="AdForm", enctype="multipart/form-data", action="/ad"
-            method="post")
+            form.form-horizontal(role="form", name="AdForm")
                 .form-group.required
                     label.col-sm-2.control-label(for="title") Title ad
                     .col-sm-10
@@ -26,7 +25,7 @@ block content
                         input.form-control(type="text", id="price", name="price", placeholder="Enter price", required)
 
 
-                .errorResponse.col-sm-offset-4.help-block
+                .errorResponse.col-sm-offset-2.help-block
 
                 .form-group
                     .col-sm-offset-2.col-sm-10

@@ -1,5 +1,75 @@
 //
    Created by Karim on 08.05.2016.
 
+extends layout/page
+
+block content
+    .container
+        .row
+            - function parseDate(date) {return date.toString().split(' ').splice(1, 4).concat();};
+            .col-xs-12.col-sm-9
+                h3 #{ad.title}
+                p #{parseDate(ad.created)}
+                img(src="#{ad.img}", style="max-width: 100%")
+                hr
+                p(style="white-space:pre-wrap") #{ad.description}
+                hr
+
+            .col-xs-12.col-sm-3(style="text-align: center")
+                h3 Продавец:
+                p
+                    strong Имя: #{ad.author.username}
+                p
+                    strong E-mail: #{ad.author.email}
+                p
+                    strong Номер телефона: #{ad.author.phone}
+
+                h3 Цена:
+                    span.label.label-success #{ad.price} Грн
 
 
+                hr
+
+        .row
+            .col-xs-12
+
+                each comment in ad.comments
+                    blockquote
+                        p #{comment.rating} Stars
+                        p #{comment.text}
+                        footer #{comment.author.username}, #{parseDate(comment.created)}
+
+                hr
+
+                form.form-horizontal(name="commentForm")
+                    .form-group.required
+                        label.col-xs-12.control-label(for="comment", style="text-align: left") Ваш коментарий
+                        .col-xs-12
+                            textarea.form-control(id="comment", name="text", rows="6", placeholder="Введите коментарий", required)
+
+                    .form-group.required
+                        label.col-sm-2.control-label Ваша оценка
+                        .col-sm-10
+                            label.radio-inline
+                                input(type="radio", name="rating", value="1")
+                                strong 1
+                            label.radio-inline
+                                input(type="radio", name="rating", value="2")
+                                strong 2
+                            label.radio-inline
+                                input(type="radio", name="rating", value="3")
+                                strong 3
+                            label.radio-inline
+                                input(type="radio", name="rating", value="4")
+                                strong 4
+                            label.radio-inline
+                                input(type="radio", name="rating", value="5", checked)
+                                strong 5
+
+                    .form-group
+                        .col-sm-offset-2.col-sm-10
+                            button.btn.btn-primary.commentAd(type="submit", data-id="#{ad._id}") Коментировать
+
+
+block append script
+    script(src="/js/controllers/AdCommentController.js")
