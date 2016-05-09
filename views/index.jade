@@ -7,19 +7,30 @@ block content
     .container
         .row
             each ad in ads
-                .product.col-xs-12.col-sm-4.col-md-2.col-lg-1
+                - function parseDate(date) {return date.toString().split(' ').splice(1, 4).concat();};
+                .product.col-xs-12.col-sm-4
                     a(href="/ad/#{ad._id}")
-                        img(src="#{ad.img}", alt="#{ad.title}", style="max-width: 100%")
-
-                    a(href="/ad/#{ad._id}")
+                        if ad.img
+                            img(src="#{ad.img}", alt="#{ad.title}", style="max-width: 100%")
+                        else
+                            img(src="/images/no_photo.jpg", alt="#{ad.title}", style="max-width: 100%")
+                    a.title(href="/ad/#{ad._id}")
                         h4 #{ad.title}
-                    span #{ad.created}
-                    h3
-                        strong.label.label-success #{ad.price} Грн
-                    //if user
-                    //    if user.username === ad.author
-                    //        button.btn-info.deleteAd-btn Удалить
-                    //    if isSubscription(ad._id)
-                    //        button.btn-info.subscription-btn Подписатся
-                    //    else
-                    //        button.btn-info.unSubscription-btn Отписатся
+                    span #{parseDate(ad.created)}
+                    .row
+                        h3.col-xs-6
+                            strong.label.label-success #{ad.price} Грн
+                        h3.col-xs-6(style="text-align: right")
+                            if user
+                                if user.id == ad.author
+                                    button.btn.btn-danger.deleteAd-btn(data-id="#{ad._id}")
+                                        span.glyphicon.glyphicon-trash(aria-hidden="true")
+                        //if user._id == ad.author
+                        //    button.btn-info.deleteAd-btn Удалить
+                        //if isSubscription(ad._id)
+                        //    button.btn-info.subscription-btn Подписатся
+                        //else
+                        //    button.btn-info.unSubscription-btn Отписатся
+
+block append script
+    script(src="/js/controllers/AdController.js")

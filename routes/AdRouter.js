@@ -19,11 +19,13 @@ var cloudinary = require('../libs/cloudinary');
 
 AdRouter.route('/')
     .get(function(req, res, next) {
-
         var handler = function(err, ads) {
             if(err) return next(err);
-            console.log(ads[0].created.getMonth());
-            res.render('index', {ads: ads});
+            if(res.req.headers['x-requested-with'] == 'XMLHttpRequest') {
+                res.json(ads);
+            } else {
+                res.render("index", {ads: ads});
+            }
         };
 
         if(req.query.searchField)
@@ -51,6 +53,8 @@ AdRouter.route('/ad')
 
         form.parse(req, function(err, fields, files) {
             if(err) return next(err);
+            console.log(fields);
+            console.log(files);
             var obj = {
                 title: fields.title[0],
                 description: fields.description[0],
@@ -58,7 +62,7 @@ AdRouter.route('/ad')
                 author: author
             };
 
-            if(files.file) {
+            if(files.file[0].originalFilename) {
                 cloudinary.uploader.upload(files.file[0].path, function(result) {
                     if(result.url) {
                         obj.img = result.url;
@@ -125,7 +129,7 @@ AdRouter.route('/ad/:adId')
                     });
                 });
             } else {
-                res.status(404).send({});
+                res.status(404).end();
             }
         });
     })

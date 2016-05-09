@@ -18,7 +18,7 @@ header
                                 input.form-control(type="search", name="searchField")
                             button.btn.btn-default(type="submit") Поиск
                     if user
-                        li: a.label.label-warning(href='/adEdit')
+                        li: a.btn.btn-warning(href='/adEdit') Дать обьявление
                         li.dropdown
                             a.dropdown-toggle(data-toggle="dropdown", role="button", aria-haspopup="true", aria-expanded="false") #{user.username}
                             ul.dropdown-menu
