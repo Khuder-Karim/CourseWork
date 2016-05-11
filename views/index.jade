@@ -29,10 +29,10 @@ block content
                                 else
                                     if !isSubscription(ad._id)
                                         button.btn.btn-info.subscription-btn(data-id="#{ad._id}")
-                                            span.glyphicon.glyphicon-edit
+                                            span.glyphicon.glyphicon-star-empty
                                     else
                                         button.btn.btn-info.unSubscription-btn(data-id="#{ad._id}")
-                                            span.glyphicon.glyphicon-share
+                                            span.glyphicon.glyphicon-star
 
 block append script
     script(src="/js/controllers/AdController.js")
